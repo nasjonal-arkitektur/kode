@@ -10,6 +10,7 @@ using System.Windows.Forms;
 namespace DesktopApp1
 {
 
+    public enum FileActions { NotSet, AddToList, SetLatest }
 
     class EriksFileUtils
     {
@@ -19,17 +20,48 @@ namespace DesktopApp1
         List<string> dirs = new List<string>();
 
         Log logg = null;
-
+        FileActions m_fileAction = FileActions.NotSet;
+        private DateTime m_latestTime;
+            
         public EriksFileUtils(Log log)
         {
             logg = log;
+            clearFileAction();
+            clearLatestTime();
         }
 
+
+        private void clearLatestTime()
+        {
+            m_latestTime = DateTime.MinValue;
+        }
+        private void updateLatestTime(DateTime time)
+        {
+            if (time > m_latestTime)
+                m_latestTime = time;
+        }
+
+        private void setFileAction(FileActions fileAction)
+        {
+            m_fileAction = fileAction;
+        }
+        private void clearFileAction()
+        {
+            m_fileAction = FileActions.NotSet;
+        }
 
         public void clearLists()
         {
             files.Clear();
             dirs.Clear();
+        }
+
+        public DateTime GetLatestTimeOfFilesInDirRecursive(string sDir)
+        {
+            clearLatestTime();
+            setFileAction(FileActions.SetLatest);
+            TreatFilesRecursive(sDir);
+            return m_latestTime;
         }
 
         public List<string> getSubDirectories(string sDir)
@@ -126,7 +158,8 @@ namespace DesktopApp1
                 foreach (var file in Directory.GetFiles(sDir, searchSpec))
                 {
                     //This is where you would manipulate each file found, e.g.:
-                    DoAction(file);
+                    //DoAction(file);
+                    files.Add(file);
                 }
                 return files;
             }
@@ -138,10 +171,57 @@ namespace DesktopApp1
             }
         }
 
-        private void DoAction(string filepath)
+
+
+        public List<string> TreatFilesRecursive(string sDir)
         {
-            files.Add(filepath);
-            //MessageBox.Show(filepath);
+            return TreatFilesRecursive(sDir, "*.*");
+        }
+        public List<string> TreatFilesRecursive(string sDir, string searchSpec)
+        {
+
+            if (searchSpec == null)
+                searchSpec = "*.*";
+            try
+            {
+                foreach (string d in Directory.GetDirectories(sDir))
+                {
+                    //MessageBox.Show(d);
+                    TreatFilesRecursive(d, searchSpec);
+                }
+                foreach (var file in Directory.GetFiles(sDir, searchSpec))
+                {
+                    DoActionOnFile(file);
+                }
+                return files;
+            }
+            catch (System.Exception e)
+            {
+                logg.doLog(e.Message);
+                MessageBox.Show(e.Message);
+                return null;
+            }
+        }
+
+        private void DoActionOnFile(string file)
+        {
+
+            switch (m_fileAction)
+            {
+
+                case FileActions.AddToList:
+                    files.Add(file);
+                    break;
+                case FileActions.SetLatest:
+                    updateLatestTime(System.IO.File.GetLastWriteTime(file));
+                    break;
+                default: //NotSet
+                    MessageBox.Show("Programming error! FileActions.NotSet! Application exiting...");
+                    System.Windows.Forms.Application.Exit();
+                    break;
+            }
+
+
         }
    
 
@@ -149,7 +229,7 @@ namespace DesktopApp1
         {
             DirectoryInfo diSource = new DirectoryInfo(sourceDirectory);
             DirectoryInfo diTarget = new DirectoryInfo(targetDirectory);
-
+            logg.doLog("Kopierer " + diSource + " --> " + diTarget);
             CopyDirRecursive(diSource, diTarget);
         }
 

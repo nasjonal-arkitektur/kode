@@ -13,15 +13,15 @@ namespace DesktopApp1
 {
     class NasjonalArkitektur
     {
-        static string commonDirName = null; // = "felles";
-        static string rootDir = null; // = @"C:\Users\eha\OneDrive\GitHub\Difi\nasjonal_arkitektur";
-        static string srcDir = null; // = rootDir + @"\" + commonDirName;
+        static string m_commonDirName = null; // = "felles";
+        static string m_rootDir = null; // = @"C:\Users\eha\OneDrive\GitHub\Difi\nasjonal_arkitektur";
+        static string m_srcDir = null; // = m_rootDir + @"\" + m_commonDirName;
 
         static bool test = false;
         static bool option_github_io = false;
 
 
-        EriksFileUtils utils = null;
+        EriksFileUtils m_utils = null;
         Log log = null;
         string logfilePath = null;
 
@@ -31,58 +31,58 @@ namespace DesktopApp1
             test = false;
             option_github_io = true;
 
-            commonDirName = "felles";
+            m_commonDirName = "felles";
 
             if (option_github_io)
-                rootDir = @"C:\Users\eha\OneDrive\GitHub\nasjonal-arkitektur\nasjonal-arkitektur.github.io";
+                m_rootDir = @"C:\Users\eha\OneDrive\GitHub\nasjonal-arkitektur\nasjonal-arkitektur.github.io";
             else
-                rootDir = @"C:\Users\eha\OneDrive\GitHub\Difi\nasjonal_arkitektur";
+                m_rootDir = @"C:\Users\eha\OneDrive\GitHub\Difi\nasjonal_arkitektur";
 
-            srcDir = rootDir + @"\" + commonDirName;
+            m_srcDir = m_rootDir + @"\" + m_commonDirName;
 
             if (test)
-                rootDir = rootDir + @"\" + "test1";
+                m_rootDir = m_rootDir + @"\" + "test1";
 
-            logfilePath = rootDir + @"\" + "log";
+            logfilePath = m_rootDir + @"\" + "log";
             log = new Log(logfilePath);
 
-            utils = new EriksFileUtils(log);
+            m_utils = new EriksFileUtils(log);
         }
 
         public void OppdaterFellesFiler()
         {
             /* 
-                Copy entire srcDir ("felles") to all subdirectories under rootDir, 
+                Copy entire m_srcDir ("felles") to all subdirectories under m_rootDir, 
                 except som special subdirectories (.git, images, ...) . 
                 Any existing files of the same name ("felles") should be deleted first, 
-                so that only the updated files from srcDir remains.
+                so that only the updated files from m_srcDir remains.
 
                 Note: "Felles" means "common". Not using the name "common", due to some problem...
             */
 
-            //List<string> fileList = utils.getFilesRecursive(srcDir);
+            //List<string> fileList = m_utils.getFilesRecursive(m_srcDir);
 
-            //string rootDir = "C:\\Users\\eha\\OneDrive\\GitHub\\Difi\\nasjonal_arkitektur";
+            //string m_rootDir = "C:\\Users\\eha\\OneDrive\\GitHub\\Difi\\nasjonal_arkitektur";
 
-            utils.clearLists();
+            m_utils.clearLists();
 
             if (test)
-                rootDir = "C:\\Users\\eha\\OneDrive\\GitHub\\Difi\\nasjonal_arkitektur\\test1";
+                m_rootDir = "C:\\Users\\eha\\OneDrive\\GitHub\\Difi\\nasjonal_arkitektur\\test1";
 
 
-            List<string> targetDirList = utils.getDirsRecursive(rootDir);
+            List<string> targetDirList = m_utils.getDirsRecursive(m_rootDir);
             //List<string> sublist = targetDirList.FindAll(searchPredicateForExclusionOfTargetDirs);
             targetDirList.RemoveAll(searchPredicateForExclusionOfTargetDirs); // filter list
 
             foreach (String dir in targetDirList)
             {
                 String targetDir = dir + "\\felles";
-                utils.CopyDirRecursive(srcDir, targetDir);
+                m_utils.CopyDirRecursive(m_srcDir, targetDir);
             }
 
 
             //string targetDir = "C:\\Users\\eha\\OneDrive\\GitHub\\Difi\\nasjonal_arkitektur\\test1\\felles";
-            //utils.CopyDirRecursive(srcDir, targetDir);
+            //m_utils.CopyDirRecursive(m_srcDir, targetDir);
 
         }
 
@@ -120,21 +120,23 @@ namespace DesktopApp1
         {
             int numReplaced = 0;
 
-            utils.clearLists();
+            m_utils.clearLists();
 
             log.doLog("ErstattTekstIAlleFiler(" + textToFind + ", " + replacementText + ")");
-            //utils.ReplaceTextInFiles(rootDir, textToFind, replacementText, true);
+            //m_utils.ReplaceTextInFiles(m_rootDir, textToFind, replacementText, true);
 
-            List<string> dirList = utils.getDirsRecursive(rootDir, true);
+            List<string> dirList = m_utils.getDirsRecursive(m_rootDir, true);
             dirList.RemoveAll(searchPredicateForExclusionOfDirsToConsiderForSearchAndReplace); // filter list
 
             foreach (String dir in dirList)
             {
-                numReplaced += utils.ReplaceTextInFiles(dir, textToFind, replacementText, false);
+                numReplaced += m_utils.ReplaceTextInFiles(dir, textToFind, replacementText, false);
             }
 
             return numReplaced;
         }
+
+
 
         private void RunAsciiDoctor(string adocfile)
         {
@@ -151,15 +153,31 @@ namespace DesktopApp1
                 string mainHtml = path + @"\" + "main.html";
                 string indexHtml = path + @"\" + "index.html";
 
-                string checkFile = htmlFile;
+                string checkHtmlFile = htmlFile;
                 if (option_github_io && filenameWitoutExtension == "main")
-                    checkFile = indexHtml;
+                    checkHtmlFile = indexHtml;
 
-                if (File.Exists(checkFile))
+                // unless some of the "felles" files are newer, skip if time of html file is newer than adoc file
+                DateTime latest = File.GetLastWriteTime(checkHtmlFile);
+                DateTime latestADocFile = File.GetLastWriteTime(adocfile);
+                DateTime latestCommonFile = m_utils.GetLatestTimeOfFilesInDirRecursive(m_srcDir);
+
+                bool proceed = false;
+
+                if (latestADocFile > latest)
                 {
-                    if (File.GetLastWriteTime(checkFile) > File.GetLastWriteTime(adocfile))
-                        return;
+                    latest = latestADocFile;
+                    proceed = true;
                 }
+
+                if (latestCommonFile > latest)
+                {
+                    latest = latestCommonFile;
+                    proceed = true;
+                }
+
+                if (!proceed)
+                    return;
 
 
                 log.doLog("RunAsciiDoctor(" + adocfile + ")");
@@ -254,11 +272,11 @@ namespace DesktopApp1
             List<string> dirList = null;
 
 
-            utils.clearLists();
+            m_utils.clearLists();
 
             try
             {
-                dirList = utils.getDirsRecursive(rootDir, true);
+                dirList = m_utils.getDirsRecursive(m_rootDir, true);
                 dirList.RemoveAll(searchPredicateForExclusionOfTargetDirs); // filter list
 
                 foreach (String dir in dirList)
@@ -267,7 +285,7 @@ namespace DesktopApp1
                         log.doLog("dir.Length > 248) for " + dir);
 
 
-                    fileList = utils.getFilesInDir(dir, "*.adoc");
+                    fileList = m_utils.getFilesInDir(dir, "*.adoc");
                     foreach (String file in fileList)
                     {
                         if (file.Length > 260) // TODO: make literal
@@ -298,13 +316,13 @@ namespace DesktopApp1
             return; //see messageBox above
 
 
-            utils.clearLists();
+            m_utils.clearLists();
 
 
             string newFileNames = "index.adoc";
             string oldFileNames = "main.adoc";
 
-            List<string> fileList = utils.getFilesRecursive(rootDir, oldFileNames);
+            List<string> fileList = m_utils.getFilesRecursive(m_rootDir, oldFileNames);
 
             try
             {
@@ -330,7 +348,7 @@ namespace DesktopApp1
         {
 
             List<string> filesWithLongPaths = new List<string>();
-            List<string> allFiles = utils.getFilesRecursive(rootDir);
+            List<string> allFiles = m_utils.getFilesRecursive(m_rootDir);
             foreach (string file in allFiles)
             {
                 if (file.Length > 260) // TODO: make literal
