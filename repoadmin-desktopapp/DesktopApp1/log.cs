@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define GITHUB_IO
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,22 +10,27 @@ using System.IO;
 
 namespace DesktopApp1
 {
+
     class Log
     {
 
-        string logfilePath = null; //@"C:\Users\eha\OneDrive\GitHub\Difi\nasjonal_arkitektur\log\logfile.txt";
-        DateTime timestamp = DateTime.Now;
+#if GITHUB_IO
+        const string m_logfilePath = @"C:\Users\eha\OneDrive\GitHub\nasjonal-arkitektur\nasjonal-arkitektur.github.io\log\logfile.txt";
+#else
+        const string m_logfilePath = @"C:\Users\eha\OneDrive\GitHub\Difi\nasjonal_arkitektur\log\logfile.txt";
+#endif
 
+        /*
         public Log(string logPath)
         {
-            logfilePath = logPath + @"\" + "logfile.txt";
+            m_logfilePath = logPath + @"\" + "logfile.txt";
         }
-
-        public void doLog(string txtToLog)
+*/
+        static public void doLog(string txtToLog)
         {
-            string logline = System.Environment.NewLine + timestamp.ToString() + ": " + txtToLog;
-            File.AppendAllText(logfilePath, logline);
-            //Console.WriteLine(logline);
+            string logline = System.Environment.NewLine + DateTime.Now.ToString() + ": " + txtToLog;
+            File.AppendAllText(m_logfilePath, logline);
+            Console.WriteLine(logline);
         }
     }
 }

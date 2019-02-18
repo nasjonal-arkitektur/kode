@@ -6,9 +6,11 @@ using System.Windows.Forms;
 
 namespace DesktopApp1
 {
-    static class Program
+
+     static class Program
     {
-        /// <summary>
+
+         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]

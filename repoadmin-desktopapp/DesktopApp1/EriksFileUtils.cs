@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace DesktopApp1
 {
 
-    public enum FileActions { NotSet, AddToList, SetLatest }
+    public enum FileActions { NotSet, AddToList, SetLatest, CheckAsciidocIncludes }
 
     class EriksFileUtils
     {
@@ -19,13 +19,11 @@ namespace DesktopApp1
         List<string> files = new List<string>();
         List<string> dirs = new List<string>();
 
-        Log logg = null;
         FileActions m_fileAction = FileActions.NotSet;
         private DateTime m_latestTime;
             
-        public EriksFileUtils(Log log)
+        public EriksFileUtils()
         {
-            logg = log;
             clearFileAction();
             clearLatestTime();
         }
@@ -85,7 +83,7 @@ namespace DesktopApp1
             }
             catch (System.Exception e)
             {
-                logg.doLog(e.Message);
+                Log.doLog(e.Message);
                 MessageBox.Show(e.Message);
                 return null;
             }
@@ -109,7 +107,7 @@ namespace DesktopApp1
             }
             catch (System.Exception e)
             {
-                logg.doLog(e.Message);
+                Log.doLog(e.Message);
                 MessageBox.Show(e.Message);
                 return null;
             }
@@ -165,7 +163,7 @@ namespace DesktopApp1
             }
             catch (System.Exception e)
             {
-                logg.doLog(e.Message);
+                Log.doLog(e.Message);
                 MessageBox.Show(e.Message);
                 return null;
             }
@@ -197,7 +195,7 @@ namespace DesktopApp1
             }
             catch (System.Exception e)
             {
-                logg.doLog(e.Message);
+                Log.doLog(e.Message);
                 MessageBox.Show(e.Message);
                 return null;
             }
@@ -213,7 +211,10 @@ namespace DesktopApp1
                     files.Add(file);
                     break;
                 case FileActions.SetLatest:
-                    updateLatestTime(System.IO.File.GetLastWriteTime(file));
+                    updateLatestTime(File.GetLastWriteTime(file));
+                    break;
+                case FileActions.CheckAsciidocIncludes:
+                    // checkAsciidocIncludesInFile(file);
                     break;
                 default: //NotSet
                     MessageBox.Show("Programming error! FileActions.NotSet! Application exiting...");
@@ -229,7 +230,7 @@ namespace DesktopApp1
         {
             DirectoryInfo diSource = new DirectoryInfo(sourceDirectory);
             DirectoryInfo diTarget = new DirectoryInfo(targetDirectory);
-            logg.doLog("Kopierer " + diSource + " --> " + diTarget);
+            Log.doLog("Kopierer " + diSource + " --> " + diTarget);
             CopyDirRecursive(diSource, diTarget);
         }
 
@@ -268,11 +269,112 @@ namespace DesktopApp1
             }
             catch (System.Exception e)
             {
-                logg.doLog(e.Message);
+                Log.doLog(e.Message);
                 MessageBox.Show(e.Message + " Target dir: " + target.FullName);
                 return;
             }
 
+        }
+
+        public void CopyDir(string sourceDirectory, string targetDirectory)
+        {
+            DirectoryInfo diSource = new DirectoryInfo(sourceDirectory);
+            DirectoryInfo diTarget = new DirectoryInfo(targetDirectory);
+            //Log.doLog("Kopierer " + diSource + " --> " + diTarget);
+            CopyDir(diSource, diTarget);
+        }
+
+
+
+        private void CopyDir(DirectoryInfo source, DirectoryInfo target)
+        {
+            try
+            {
+                Directory.Delete(target.FullName, true); // delete first!
+            }
+            catch (DirectoryNotFoundException dirEx)
+            {
+                // accept and do nothing
+                Console.WriteLine("DirectoryNotFoundException during delete operation is OK here");
+                Type type = dirEx.GetType(); // dummy statement in order to avoid compiler warning  
+            }
+
+            try
+            {
+                Directory.CreateDirectory(target.FullName);
+
+                // Copy each file into the new directory.
+                foreach (FileInfo fi in source.GetFiles())
+                {
+                    //Console.WriteLine(@"Copying {0}\{1}", target.FullName, fi.Name);
+                    fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+                }
+ 
+            }
+            catch (System.Exception e)
+            {
+                Log.doLog(e.Message);
+                MessageBox.Show(e.Message + " Target dir: " + target.FullName);
+                return;
+            }
+
+        }
+
+        public void MoveDir(string srcDir, string destDir)
+        {
+                       
+            try
+            {
+                Directory.Move(srcDir, destDir);
+            }
+
+            catch (Exception dirEx)
+            {
+                Log.doLog(dirEx.Message);
+                MessageBox.Show(dirEx.Message);
+            }
+            
+           
+        }
+
+
+        public void DeleteDir(string dir)
+        {
+            DirectoryInfo diDir = new DirectoryInfo(dir);
+            
+            try
+            {
+                Directory.Delete(diDir.FullName, true);
+            }
+            
+            catch (DirectoryNotFoundException dirEx)
+            {
+                // accept and do nothing
+                Type type = dirEx.GetType(); // dummy statement in order to avoid compiler warning  
+            }
+            
+        }
+        public int FindTextInFiles(string rootfolder, string textToFind, bool recursive = false)
+        {
+            int totalFindCount = 0;
+
+            SearchOption sOption = SearchOption.TopDirectoryOnly;
+            if (recursive)
+                sOption = SearchOption.AllDirectories;
+
+            string[] files = Directory.GetFiles(rootfolder, "*.adoc", sOption);
+
+            foreach (string file in files)
+            {
+                int findCount = CountStringInFile(file, textToFind);
+                totalFindCount += findCount;
+
+                if (findCount > 0)
+                    Log.doLog(findCount + " occurences in " + file);
+
+            }
+
+            return totalFindCount;
         }
 
 
@@ -285,7 +387,7 @@ namespace DesktopApp1
             if (recursive)
                 sOption = SearchOption.AllDirectories;
 
-            string[] files = Directory.GetFiles(rootfolder, "*.*", sOption);
+            string[] files = Directory.GetFiles(rootfolder, "*.adoc", sOption);
 
             foreach (string file in files)
             {
@@ -299,7 +401,7 @@ namespace DesktopApp1
 
                 try
                 {
-                    logg.doLog(findCount.ToString() + " replacements in file " + file);
+                    Log.doLog(findCount.ToString() + " replacements in file " + file);
 
                     string contents = File.ReadAllText(file);
         
@@ -311,7 +413,7 @@ namespace DesktopApp1
                 }
                 catch (Exception e)
                 {
-                    logg.doLog(e.Message);
+                    Log.doLog(e.Message);
                     MessageBox.Show(e.Message);
                 
                 }
@@ -321,6 +423,72 @@ namespace DesktopApp1
             return totalFindCount;
         }
 
+        public int ReplacePathDelimetersInFiles(string rootfolder, string textToFind, string replacementText, bool recursive = false)
+        {
+            int totalFindCount = 0;
+
+            SearchOption sOption = SearchOption.TopDirectoryOnly;
+            if (recursive)
+                sOption = SearchOption.AllDirectories;
+
+            string[] files = Directory.GetFiles(rootfolder, "*.adoc", sOption);
+
+            foreach (string filepath in files)
+            {
+                if (!IsStringInFile(filepath, textToFind))
+                    return 0;
+
+                string contents = null;
+                string newLine = null;
+                try
+                {
+                    System.IO.StreamReader file = new System.IO.StreamReader(filepath);
+                    string line;
+                    while ((line = file.ReadLine()) != null)
+                    {
+                        if (line.Contains("link:") || line.Contains("include::")
+                            || line.Contains("image:") || line.Contains(":imagesdir:"))
+                        {
+                            if (line.Contains(textToFind))
+                            {
+                                newLine = line.Replace(@textToFind, @replacementText);
+                                Log.doLog("Replaced: " + line + "with: " + newLine);
+
+                                contents += newLine + Environment.NewLine;
+                                totalFindCount++;
+                            }
+                            else
+                            {
+                                contents += line + Environment.NewLine;
+                            }
+                        }
+                        else
+                        {
+                            contents += line + Environment.NewLine;
+                        }
+                        
+                    }
+
+                    file.Close();
+
+                    // Make file writable
+                    if (newLine != null) // then we know something changed
+                    {
+                        File.SetAttributes(filepath, FileAttributes.Normal);
+                        File.WriteAllText(filepath, contents);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.doLog(e.Message);
+                    MessageBox.Show(e.Message);
+
+                }
+
+            } // for each
+
+            return totalFindCount;
+        }
 
         public bool IsStringInFile(string filepath, string stringToFind)
         {
@@ -342,24 +510,28 @@ namespace DesktopApp1
             return result;
         }
 
-        public int CountStringInFile(string filepath, string stringToFind)
+        static public int CountStringInFile(string filepath, string stringToFind)
         {
             int result = 0;
             string line;
 
             System.IO.StreamReader file = new System.IO.StreamReader(filepath);
-
+            
             while ((line = file.ReadLine()) != null)
             {
                 if (line.Contains(stringToFind))
+                {
+                    Log.doLog("Linje: " + line);
                     result++;
+                }
+                    
             }
 
             file.Close();
             return result;
         }
 
-        
+  
     }
 
 }
