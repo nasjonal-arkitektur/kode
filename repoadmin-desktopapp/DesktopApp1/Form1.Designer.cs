@@ -46,6 +46,7 @@ namespace DesktopApp1
             this.button13 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // linkLabel1
@@ -90,7 +91,7 @@ namespace DesktopApp1
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(276, 158);
+            this.button2.Location = new System.Drawing.Point(286, 158);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(226, 43);
             this.button2.TabIndex = 4;
@@ -130,7 +131,7 @@ namespace DesktopApp1
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(629, 282);
+            this.button6.Location = new System.Drawing.Point(623, 291);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(226, 43);
             this.button6.TabIndex = 8;
@@ -150,7 +151,7 @@ namespace DesktopApp1
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(524, 158);
+            this.button8.Location = new System.Drawing.Point(534, 158);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(226, 43);
             this.button8.TabIndex = 10;
@@ -180,11 +181,11 @@ namespace DesktopApp1
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(286, 219);
+            this.button11.Location = new System.Drawing.Point(534, 219);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(226, 43);
             this.button11.TabIndex = 13;
-            this.button11.Text = "Sjekk links";
+            this.button11.Text = "Sjekk adoc links";
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
@@ -200,7 +201,7 @@ namespace DesktopApp1
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(534, 219);
+            this.button13.Location = new System.Drawing.Point(286, 219);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(226, 43);
             this.button13.TabIndex = 15;
@@ -228,11 +229,22 @@ namespace DesktopApp1
             this.button15.UseVisualStyleBackColor = true;
             this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(766, 219);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(226, 43);
+            this.button16.TabIndex = 18;
+            this.button16.Text = "Sjekk url links";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1218, 451);
+            this.Controls.Add(this.button16);
             this.Controls.Add(this.button15);
             this.Controls.Add(this.button14);
             this.Controls.Add(this.button13);
@@ -280,6 +292,7 @@ namespace DesktopApp1
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.Button button16;
     }
 }
 

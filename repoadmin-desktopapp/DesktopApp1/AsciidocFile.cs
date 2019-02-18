@@ -148,7 +148,7 @@ namespace DesktopApp1
             
         }
 
-        public static bool URLResponding(string url)
+        public static string URLResponding(string url)
         {
 
             //Log.doLog("Sjekker url: " + url);
@@ -158,12 +158,12 @@ namespace DesktopApp1
                 System.Net.WebRequest req = System.Net.WebRequest.Create(url);
                 System.Net.WebResponse res = req.GetResponse();
                 res.Close();
-                return true;
+                return null;
             }
             catch (System.Net.WebException ex)
             {
-                Console.WriteLine(ex.Message);
-                return false;
+                //Console.WriteLine(ex.Message);
+                return ex.Message;
             }
         }
 
@@ -236,9 +236,11 @@ namespace DesktopApp1
 
                 foreach (string url in urls)
                 {
-                    if (!URLResponding(url))
+
+                    string exceptionStr = URLResponding(url);
+                    if (exceptionStr != null)
                     {
-                        Log.doLog("Råtten lenke (svarer ikke): " + url + " i fil: " + m_filepath);
+                        Log.doLog("Råtten lenke (" + exceptionStr + "): " + url + " i fil: " + m_filepath);
                         urlIssueCount++;
                     }
                 }
@@ -254,6 +256,27 @@ namespace DesktopApp1
             return urlIssueCount;
         }
 
+
+        public int ProcessLineForUrlLinkIssue(string line)
+        {
+            const string asciidocLinkString = "link:";
+
+            int issueCount = 0;
+
+            if (line.StartsWith("//")) //asciidoc comment
+                return 0;
+
+            if (line.StartsWith(" ")) //space - rest of line no asciidoc commands
+                return 0;
+
+            if (line.StartsWith("\t")) //tab - rest of line no asciidoc commands 
+                return 0;
+
+            issueCount += ProcessLineForUrlLinkIssues(line);
+
+            return issueCount;
+        }
+
         public int ProcessLineForLinkIssue(string line)
         {
             const string asciidocLinkString = "link:";
@@ -263,7 +286,14 @@ namespace DesktopApp1
             if (line.StartsWith("//")) //asciidoc comment
                 return 0;
 
-            issueCount += ProcessLineForUrlLinkIssues(line);
+            if (line.StartsWith(" ")) //space - rest of line no asciidoc commands
+                return 0;
+
+            if (line.StartsWith("\t")) //tab - rest of line no asciidoc commands 
+                return 0;
+
+            // erik: NB: Foreløpig kommentert ut fordi det tar tid (bør kunne kjøres som egen kommando)
+            // issueCount += ProcessLineForUrlLinkIssues(line);
 
             try
             {
@@ -349,7 +379,7 @@ namespace DesktopApp1
                 if (!File.Exists(path))
                 {
                     Log.doLog("Error: Failed to locate link file " + path + ", see file " + m_filepath);
-                    return issueCount; ;
+                    return ++issueCount; ;
                 }
 
                 return issueCount;
@@ -366,6 +396,12 @@ namespace DesktopApp1
         public int processLine(string line)
         {
             if (line.StartsWith("//")) //asciidoc comment
+                return 0;
+
+            if (line.StartsWith(" ")) //space - rest of line no asciidoc commands
+                return 0;
+
+            if (line.StartsWith("\t")) //tab - rest of line no asciidoc commands 
                 return 0;
 
             if (!line.Contains("include::"))

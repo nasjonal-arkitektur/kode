@@ -273,5 +273,16 @@ namespace DesktopApp1
             
 
         }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            // sjekk url links
+
+            NasjonalArkitektur na = new NasjonalArkitektur();
+            //int count = na.SjekkAsciidocLinks();
+            //MessageBox.Show(count.ToString() + " url link problemer funnet");
+
+            MessageBox.Show("Yet to be implemented");
+        }
     }
 }

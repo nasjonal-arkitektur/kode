@@ -188,7 +188,8 @@ namespace DesktopApp1
                 foreach (string file in files)
                 {
 
-                    Log.doLog("Checking file " + file);
+                    //Log.doLog("Checking file " + file);
+                    Console.Write(".");
 
                     AsciidocFile asciidocFile = new AsciidocFile(file);
                     int numProblems = 0;
