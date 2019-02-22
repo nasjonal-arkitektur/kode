@@ -1,0 +1,17 @@
+/*
+ * Test1
+ */
+
+console.log("Test1");
+
+load(__DIR__ + "Constants.ajs");
+load(__DIR__ + "Model_ReplacePropertyValues.ajs");
+
+var changecount = 0;
+
+
+console.log("Start Test1\n");
+
+changecount += Model_ReplacePropertyValues_ManualInput();
+
+console.log("\nEnd Test1; changecount = " + changecount);
