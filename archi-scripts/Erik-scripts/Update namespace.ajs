@@ -1,0 +1,14 @@
+/*
+ * Update namespace
+ */
+ 
+console.log("Update namespace");
+
+	var propName = "difi:namespace";
+
+	var propValue = window.prompt("Which value do you want to set for '"+propName+"' (leave empty to cancel)?", "");
+	if (propValue) {
+		$(selection).prop(propName, propValue);
+
+}
+

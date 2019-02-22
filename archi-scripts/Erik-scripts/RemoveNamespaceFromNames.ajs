@@ -1,0 +1,47 @@
+/*
+ * Remove namespace to name of selected objects
+ *
+ */
+ 
+
+console.show();
+console.clear();
+//console.log("Remove namespace names");
+
+
+var namespacePropName = "difi:namespace";
+var namespacePrefix = " [ns:";
+var namespacePostfix = "]";
+
+$(selection).each(function(e) {
+
+	var namespaceValue = e.prop(namespacePropName);
+	var namespaceWithPreAndPostfix = namespacePrefix + namespaceValue + namespacePostfix;
+	
+	console.log("Removing " + namespaceWithPreAndPostfix + " from displayed name of " + e.name);
+
+	if (e.namespaceValue != "")
+	{
+		//e.name = e.name.replace(namespaceWithPreAndPostfix, "");		
+		// NOTE, Erik: Better way: Look for the prefix (" [ns:") and delete until postfix no matter the value!!!!!!!!!!!!!!!!!!
+		
+		var startPos = e.name.indexOf(namespacePrefix);
+		if (startPos >= 0) {
+		
+			var restOfString = e.name.substring(startPos);
+			var endPos = restOfString.indexOf(namespacePostfix);
+			
+			if (endPos >= 0) {
+			
+				var strToReplace = restOfString.substring(0, endPos + 1);
+				console.log("strToReplace = " + strToReplace); // temptest
+
+				e.name = e.name.replace(strToReplace, "");	
+								
+			}
+		}
+	}	
+
+});
+
+

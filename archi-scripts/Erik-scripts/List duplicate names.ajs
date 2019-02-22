@@ -1,0 +1,10 @@
+/*
+ * List duplicate names
+ */
+
+console.clear();
+ 
+console.log("List duplicate names");
+
+
+

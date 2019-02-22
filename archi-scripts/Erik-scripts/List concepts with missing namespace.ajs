@@ -1,0 +1,19 @@
+/*
+ * List concepts with missing namespace
+ */
+ 
+console.clear(); 
+console.log("List concepts with missing namespace");
+
+	var namespacePropName = "difi:namespace";
+
+    $("element").each(function(e) {
+	
+		var namespaceValue = e.prop(namespacePropName);
+		
+		//console.log("namespaceValue: " + namespaceValue);
+		
+		if (!namespaceValue) {
+			console.log("Warning: " + " missing difi:namespace property for element " + e.name );
+        }
+    });

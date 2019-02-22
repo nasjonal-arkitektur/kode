@@ -1,0 +1,12 @@
+/*
+ * Constants
+ */
+ 
+var const_prop_namespace_name = "difi:namespace";
+var const_prop_namespace_value_default = "default";
+var const_prop_namespace_val_eira = "eira";
+var const_prop_namespace_val_eirabased = "eirabased";
+
+var const_prop_language_name = "difi:language";
+var const_prop_language_value_no = "no";
+var const_prop_language_value_en = "en";

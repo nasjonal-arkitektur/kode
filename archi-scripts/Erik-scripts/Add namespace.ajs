@@ -1,0 +1,22 @@
+/*
+ * Add namespace to name of selected objects
+ *
+ */
+ 
+
+console.show();
+console.clear();
+
+var namespacePropName = "difi:namespace";
+var namespacePrefix = " [ns:";
+var namespacePostfix = "]";
+
+$(selection).each(function(e) {
+
+	var namespaceValue = e.prop(namespacePropName);
+
+	if (e.namespaceValue != "")
+		e.name += namespacePrefix + namespaceValue + namespacePostfix;
+	
+});
+
