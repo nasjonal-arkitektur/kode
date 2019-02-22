@@ -2,23 +2,12 @@
  * CreateDefaultProperties
  */
 
-/*
-var const_prop_namespace_name = "difi:namespace";
-var const_prop_namespace_value_default = "default";
-var const_prop_namespace_val_eira = "eira";
-var const_prop_namespace_val_eirabased = "eirabased";
-
-var const_prop_language_name = "difi:language";
-var const_prop_language_value_no = "no";
-var const_prop_language_value_en = "en";
-*/
-
 load(__DIR__ + "Constants.ajs");
 
 function CreateMissingProperty(concept, propName, propValue) {
 
 	if (!concept.prop(propName) ) {
-		console.log(". Creating missing property " + propName + " for " + concept.name + " (" + concept.type + ")" );
+		console.log(". Creating missing or empty standard property " + propName + " for " + concept.name + " (" + concept.type + ")" );
 		concept.prop(propName, propValue);
 	}
 }
@@ -29,11 +18,14 @@ function CreateDefaultProperties() {
 	console.clear();
 	console.log("Starting function CreateDefaultProperties");
 	
+	
+	
     $("concept").each(function(concept) {
 		
 		CreateMissingProperty(concept, const_prop_namespace_name, const_prop_namespace_value_default);
 		
-
+		//CreateMissingProperty(concept, const_prop_language_name, const_prop_language_value_no);
+		
     });
 	
 	console.log("Ending function CreateDefaultProperties");

@@ -3,10 +3,22 @@
  */
  
 var const_prop_namespace_name = "difi:namespace";
-var const_prop_namespace_value_default = "default";
+//const_prop_namespace_values = ["-", "eira", "eirabased"];
+var const_prop_namespace_value_default = "-";
 var const_prop_namespace_val_eira = "eira";
 var const_prop_namespace_val_eirabased = "eirabased";
 
-var const_prop_language_name = "difi:language";
+var const_prop_language_name = "difi:language"; // only for views
 var const_prop_language_value_no = "no";
 var const_prop_language_value_en = "en";
+
+var const_prop_name_no = "difi:name_no";
+var const_prop_name_en = "difi:name_en";
+
+var const_prop_description_no = "difi:description_no";
+var const_prop_description_en = "difi:description__en";
+var const_prop_description_default = "-";
+
+
+
+
