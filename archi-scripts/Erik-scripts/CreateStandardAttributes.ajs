@@ -13,19 +13,26 @@ function CreateMissingProperty(concept, propName, propValue) {
 }
 
 
+
+
 function CreateDefaultProperties() {
 
 	console.clear();
 	console.log("Starting function CreateDefaultProperties");
 	
+	// model
+	CreateMissingProperty(model, const_prop_default_language, const_prop_language_value_no);	
+	CreateMissingProperty(model, const_prop_current_language, const_prop_language_value_no);
 	
+	// views
+	$("view").each(function(view) {
+		CreateMissingProperty(view, const_prop_default_language, const_prop_language_value_no);
+		CreateMissingProperty(view, const_prop_current_language, const_prop_language_value_no);
+    });
 	
+	// elements and relations
     $("concept").each(function(concept) {
-		
-		CreateMissingProperty(concept, const_prop_namespace_name, const_prop_namespace_value_default);
-		
-		//CreateMissingProperty(concept, const_prop_language_name, const_prop_language_value_no);
-		
+		CreateMissingProperty(concept, const_prop_namespace, const_prop_namespace_value_default);
     });
 	
 	console.log("Ending function CreateDefaultProperties");

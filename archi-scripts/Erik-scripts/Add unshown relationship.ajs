@@ -2,23 +2,15 @@
  * Add unshown relationship
  */
  
-console.log("Add unshown relationship");
-
-console.clear();
 
 // Find DiagramComponents for a given element in a given view
 var getDiagramComponents = function(v, e) {
+
     return $(v).find().filter(function(o) {
-		console.log(e.name); //erik
-		if (e.id == null)
-			console.log("e.id == null");
-						
-		if (o.concept.id == null)
-			console.log("o.concept.id == null");
-		
         return o.concept.id == e.id;
     });
 }
+
 
 // Checks if a view contains a visual connection from src and tgt visual objects
 var contains = function(r, src, tgt) {
@@ -34,17 +26,34 @@ var contains = function(r, src, tgt) {
 }
 
 
+console.clear();
+console.log("Add unshown relationships");
+
 // Iterate through selected views to add relationships which exist in the model but not in the view
 $(selection).filter("archimate-diagram-model").each(function(v) {
-    $(v).find("element").each(function(e) {
-        $(e.concept).rels().each(function(r) {
-            getDiagramComponents(v,r.source).each(function(src) {
-                getDiagramComponents(v,r.target).each(function(tgt) {
-                    if (! contains(r, src, tgt)) {
-                        v.add(r, src, tgt);
-                    }
-                });
-            });
-        });
-    });
+
+	console.log("View: " + v.name); // erik
+
+	$(v).find("element").each(function(e) {
+
+		console.log("    Checking element: " + e.name); // erik
+
+		$(e.concept).rels().each(function(r) {
+		
+			if (r.source.id == e.concept.id) { // Erik-1: The end result will be the same, but this makes it more logical to me  
+	
+				getDiagramComponents(v,r.source).each(function(src) {
+				
+					getDiagramComponents(v,r.target).each(function(tgt) {
+					
+						if (! contains(r, src, tgt)) {
+							console.log("        => Adding " + r.type + "(" + r.name + ") from " + src.name + " to " + tgt.name ); // erik
+							v.add(r, src, tgt);
+						}
+					});
+				
+				});
+			} // Erik-1
+		});
+	});
 });

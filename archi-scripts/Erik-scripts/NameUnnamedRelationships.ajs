@@ -1,0 +1,18 @@
+/*
+ * Name unnamed relationships
+ */
+ 
+console.clear();
+console.log("Name unnamed relationships");
+
+var type = "";
+
+    $("relation").each(function(r) {
+		if (!r.name)
+		{
+			type = r.type;
+			type = type.replace("-relationship", "");
+			r.name = type;
+			
+		}
+    });

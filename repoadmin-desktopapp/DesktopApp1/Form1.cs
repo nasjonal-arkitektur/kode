@@ -93,9 +93,14 @@ namespace DesktopApp1
         //string textToFind = "https://nasjonal-arkitektur.github.io";
         //string replacementText = "https://doc.difi.no/nasjonal-arkitektur";
 
-        string textToFind = "https://github.com/nasjonal-arkitektur/nasjonal-arkitektur.github.io";
-        string replacementText = "https://github.com/difi/nasjonal_arkitektur";
-        
+        //string textToFind = "https://github.com/nasjonal-arkitektur/nasjonal-arkitektur.github.io";
+        //string replacementText = "https://github.com/difi/nasjonal_arkitektur";
+
+            string textToFind = "image:../nab_felles/media/";
+            string replacementText = "image:../plattform_felles/media/";
+
+
+            
 
             int count = na.ErstattTekstIAlleFiler(textToFind, replacementText);
 
@@ -171,20 +176,20 @@ namespace DesktopApp1
             //string textToFind = "include::";
 
             //string textToFind = "TBD.";
-            string textToFind = "nasjonal-arkitektur.github.io";
+            string textToFind = "/na_";
 
 
             int count = na.SøkTekstIAlleFiler(textToFind);
 
-
+            MessageBox.Show(count.ToString() + " occurences found");
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
             NasjonalArkitektur na = new NasjonalArkitektur();
 
-            string textToFind = "images";
-            string replacementText = "images";
+            string textToFind = "na_";
+            string replacementText = "nab_";
 
 
             int count = na.RenameDirectories(textToFind, replacementText);
@@ -283,6 +288,24 @@ namespace DesktopApp1
             //MessageBox.Show(count.ToString() + " url link problemer funnet");
 
             MessageBox.Show("Yet to be implemented");
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            
+            // Sander - lær kidsa koding
+
+            Console.WriteLine("Hei Sander, nå skal vi regne ut 2 +3!");
+            string sum = SummerToTall(2, 3);
+            MessageBox.Show(sum );
+
+        }
+
+        private string SummerToTall(int tall1, int tall2)
+        {
+            int sum = tall1 + tall2;
+            string sumString = sum.ToString();
+            return sumString;
         }
     }
 }
