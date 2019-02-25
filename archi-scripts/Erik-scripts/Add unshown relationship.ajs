@@ -2,6 +2,7 @@
  * Add unshown relationship
  */
  
+var debug = true;
 
 // Find DiagramComponents for a given element in a given view
 var getDiagramComponents = function(v, e) {
@@ -36,7 +37,7 @@ $(selection).filter("archimate-diagram-model").each(function(v) {
 
 	$(v).find("element").each(function(e) {
 
-		console.log("    Checking element: " + e.name); // erik
+		debug? console.log("    Checking element: " + e.name):true; // erik
 
 		$(e.concept).rels().each(function(r) {
 		
@@ -47,7 +48,7 @@ $(selection).filter("archimate-diagram-model").each(function(v) {
 					getDiagramComponents(v,r.target).each(function(tgt) {
 					
 						if (! contains(r, src, tgt)) {
-							console.log("        => Adding " + r.type + "(" + r.name + ") from " + src.name + " to " + tgt.name ); // erik
+							debug? console.log("        => Adding " + r.type + "(" + r.name + ") from " + src.name + " to " + tgt.name ):true; // erik
 							v.add(r, src, tgt);
 						}
 					});

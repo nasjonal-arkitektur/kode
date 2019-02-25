@@ -3,8 +3,89 @@
  */
 
 console.clear();
+
+/*
+ * deleteUnusedElements
+ */
  
-console.log("List duplicate names");
+
+/* erik, doesn't work 
+var getDuplicateItems = function(e) {
+
+    return $("element").find().filter(function(o) {
+        return o.name == e.name;
+    });
+}
+*/
+
+ 
+function ListsameNames() {
+
+	console.log("Starting function ListsameNames");
+
+	var allelements = $("element");
+	var sameNames = null;
+	var allDuplicates = null;
+	
+
+	allelements.each(function(element) {
+
+		sameNames = $("." + element.name); // The initiating "." tells the selector to regard names
+		if (sameNames.size() > 1) {
+			
+			console.log("  The name " + element.name + " found for type " + element.type + " appears in " + sameNames.size() + " elements (all types)" );
+			sameNames.each(function(e) {   //find().each(function(descendant) {
+				console.log("Id = " + e.id);			
+			});
+						
+			allelements.not(sameNames); // remove the duplicate items
+				
+			
+		}
+	
+	});
+
+
+/*
+
+		var shown = false;				
+		
+		allelements.each(function(e2) {
+		
+			if (e2.name == element.name && e2.id != element.id) {
+				
+				if (!shown) {
+					
+					console.log("  Element " + element.type + ", " + element.name + " duplicates..." );
+					console.log("        " + element.type + ", " + element.name + " (" + element.id + ")" );
+					shown = true;
+				}
+					
+				console.log("        " + element.type + ", " + e2.name + " (" + e2.id + ")" );
+				
+				
+				// remove the duplicate items from allItems
+				sameNames = $("." + element.name); // The initiating "." tells the selector to regard names
+				
+				console.log(sameNames.size() );
+				
+				allelements.not(sameNames); // performs the removing
+				
+				// add the duplicate items to the total list of duplicates
+				//allDuplicates.add(sameNames);
+				
+		
+			}
+
+		});
+*/				
+			
+
+	console.log("Ending function ListsameNames");
+
+}
+
+ListsameNames();
 
 
 
