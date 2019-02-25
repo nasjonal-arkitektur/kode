@@ -1,17 +1,11 @@
 /*
- * List duplicate names
+ * ListDuplicateNames
  */
 
 console.clear();
 
-/*
- * deleteUnusedElements
- */
- 
- 
- 
 
-var getDuplicateItems = function(elm, list) {
+var getDuplicateItemsInlist = function(elm, list) {
 
     //return $("element").filter(function(o) {
 	return list.filter(function(o) {
@@ -21,7 +15,7 @@ var getDuplicateItems = function(elm, list) {
 }
 
  
-function ListSameNames() {
+function ListDuplicateNames() {
 
 	var allelements = $("element");
 	var sameNames = null;
@@ -30,8 +24,7 @@ function ListSameNames() {
 	var elm = null;
 	var index = 0;
 	
-	var date = new Date();
-	console.log("Starting function ListsameNames " + date);
+	console.log(new Date() + ": Starting function ListDuplicateNames");
 	
 	 
 	/* doesn't work
@@ -58,9 +51,9 @@ function ListSameNames() {
 		elm = allelements[index];
 		//console.log("Checking: " + elm.name);
 		
-		sameNames = getDuplicateItems(elm, allelements);
+		sameNames = getDuplicateItemsInlist(elm, allelements);
 		if (sameNames.size() > 1) {
-			console.log("Name '" + elm.name + "' appears in " + sameNames.size() + " elements of type '" + elm.type + "'");
+			console.log("    The name '" + elm.name + "' of type '" + elm.type + "'" + "' is used for " + sameNames.size() + " different elements");
 			
 			/*
 			sameNames.each(function(e) {
@@ -82,11 +75,11 @@ function ListSameNames() {
 		
 	};		
 	
-	console.log("Ending function ListsameNames " + new Date());
+	console.log(new Date() + ": Ending function ListDuplicateNames");
 
 }
 
-ListSameNames();
+ListDuplicateNames();
 
 
 
