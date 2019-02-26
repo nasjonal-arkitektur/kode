@@ -69,7 +69,7 @@ function ListDuplicateNames() {
 			//index++; // alternative to removing the first item, but the overall result is very much slower
 			
 			allelements = allelements.filter(function(o) {
-				return (o.id != elm.id); // in effect removes the first array element 
+				return (o.id != elm.id); // in effect here removes the first array element 
 			});
 		}
 		
