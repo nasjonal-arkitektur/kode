@@ -1,0 +1,46 @@
+/*
+ * c_View
+ */
+ 
+console.log("CView");
+
+var m_view = null;
+
+function cView_GetSelectedElements() {
+
+	$(selection).filter("element").each(function(e) {
+		console.log("Selected element: " + e.name );			
+	});
+	
+}
+	
+	
+var cView_GetElementsInView = function(v) {
+
+	var elements = $(v).children().filter("element");
+	return elements;
+}
+
+var cView_GetOtherConceptsInViewWithSameName = function(vu, elm) {
+
+    return $(vu).children().filter("element").filter(function(o) {
+		
+		return ( (o.name == elm.name) && ( (o.type == elm.type) && (o.concept.id != elm.concept.id)) );
+	
+    });
+}
+
+var cView_GetOtherOccurencesInView = function(vu, elm) {
+
+    return $(vu).children().filter("element").filter(function(o) {
+		
+		return ( (o.name == elm.name) && ( (o.type == elm.type) && (o.concept.id == elm.concept.id)) );
+	
+    });
+}
+
+var cView_MergeWithDuplicateElementsInView = function(v) {
+
+	var elements = $(v).children().filter("element");
+	return elements;
+}

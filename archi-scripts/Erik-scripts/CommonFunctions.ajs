@@ -1,7 +1,41 @@
 /*
  * CommonFunctions
  */
+load(__DIR__ + "Constants.ajs");
 
+/*
+load(__DIR__ + "c_Model.ajs");
+load(__DIR__ + "c_Folder.ajs");
+load(__DIR__ + "c_View.ajs");
+load(__DIR__ + "c_Element.ajs");
+load(__DIR__ + "c_Relation.ajs");
+load(__DIR__ + "c_Viewpoint.ajs");
+*/
+
+
+var log_ListElements = function(elementList, headerText) {
+
+	console.log(headerText);	
+	
+	if (elementList != null) {
+		var i = 0;
+		
+		elementList.each(function(e) {
+			i++;
+			
+			$(e).parent().each(function(parent) {
+				console.log("   " + i + " '" + e.name + "'(" + e.id + ") in " + parent.type + " '" + parent.name + "'" );	
+				/*
+				console.log("   " + "x = " + e.bounds.x);
+				console.log("   " + "y = " + e.bounds.y);
+				console.log("   " + "width = " + e.bounds.width);
+				console.log("   " + "height = " + e.bounds.height);
+				*/
+			});
+				
+		});
+	}
+}
 
 var lib_GetDuplicateModelItems = function(elm) {
 

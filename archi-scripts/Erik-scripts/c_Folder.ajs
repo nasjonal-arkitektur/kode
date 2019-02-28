@@ -1,0 +1,28 @@
+/*
+ * c_Folder
+ */
+ 
+console.log("cFolder");
+
+//var m_folderName = null;
+//var m_folder = null;
+
+function Folder_InitExistingFromName(folderName) {
+
+	var m_folder = $("folder."+ folderName).first();
+console.log("Found folder: " + m_folder);
+}
+
+function Folder_InitExistingFromArchiObj(folder) {
+
+	m_folder = archiObj;
+}
+
+function Folder_InitNew(name, parentObj) {
+
+
+}
+
+function Folder_GetId() {
+
+}
