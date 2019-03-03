@@ -2,8 +2,8 @@
  * c_Element
  */
 
- "use strict"; 
- load(__DIR__ + "CommonFunctions.ajs");
+"use strict"; 
+load(__DIR__ + "CommonFunctions.ajs");
  
 
 var cElement = {
@@ -41,19 +41,22 @@ function cElement_HighlightConceptsInViewBeforeMerge(elm) {
 	
 	// See https://www.w3schools.com/colors/colors_rgb.asp for fill colors
 
-	console.log("cElement_HighlightOtherConceptsInViewBeforeMerge");
+	console.log("cElement_HighlightConceptsInViewBeforeMerge");
 
 	if (elm.view == null){
 		console.log("WARNING: Unexpected elm.view == null in cElement_HighlightOtherConceptsInViewBeforeMerge");
 		return false;
 	}
 	
+
 	var otherSameElements = cView_GetOtherOccurencesInView(elm.view, elm);
 	otherSameElements.each(function(e) {
 	
 		debug?(console.log("Highlighting " + e.name + ", id = " + e.id + " in view " + elm.view )):true;
-		e.fillColor = "#62dacf";
-	});		
+		e.fillColor = "#03fa00"; // green
+	});
+	
+	elm.fontColor = "#fb0100"; // red
 	
  	var duplicates = cView_GetOtherConceptsInViewWithSameName(elm.view, elm);
 	if (duplicates == null || duplicates.size() < 1)
@@ -61,13 +64,23 @@ function cElement_HighlightConceptsInViewBeforeMerge(elm) {
 		
 	duplicates.each(function(d) {
 	
-		debug?(console.log("Highlighting " + d.name + ", id = " + d.id + " in view " + elm.view )):true;
-		d.fillColor = "#fc5651";
+		debug?(console.log("Highlighting duplicate " + d.name + ", id = " + d.id + " in view " + elm.view )):true;
+		d.fillColor = "#fc5651"; // red
 	});	
 	
 
 	return true;
 	
+	
+}
+
+function cElement_GetView(elm) {
+	
+	console.log("cElement_GetView")
+	
+	if 
+	
+	return elm.view;
 	
 }
 

@@ -32,9 +32,17 @@ var cView_GetOtherConceptsInViewWithSameName = function(vu, elm) {
 
 var cView_GetOtherOccurencesInView = function(vu, elm) {
 
-    return $(vu).children().filter("element").filter(function(o) {
-		
-		return ( (o.name == elm.name) && ( (o.type == elm.type) && (o.concept.id == elm.concept.id)) );
+
+	console.log("cView_GetOtherOccurencesInView, " + "view = " + vu.name + ", element = " + elm.name);  
+	
+	/*
+    return $(vu).children().filter("element").filter(function(o) { // erik tbd! doesn't work for nested objects - need recursion or ...!!!!!
+		return ( o.concept.id == elm.concept.id );
+	*/
+	
+	return $("element").filter(function(o) { 
+		if (o.view == vu)
+			return ( o.concept.id == elm.concept.id );
 	
     });
 }

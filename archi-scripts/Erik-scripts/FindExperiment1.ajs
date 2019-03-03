@@ -11,6 +11,7 @@ $(selection).filter("archimate-diagram-model").each(function(v) {
 	$(v).find("element").each(function(e) {
 
 		
+		console.log(" " + "Element name: " + e.name );			
 		
 		
 		$(e).find().each(function(descendant) {

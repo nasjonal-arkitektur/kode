@@ -2,6 +2,9 @@
  * c_Model
  */
 
+//load(__DIR__ + "Constants.ajs");
+//load(__DIR__ + "CommonFunctions.ajs");
+
 var m_model = null;
 
 
@@ -46,6 +49,12 @@ var cModel_GetDirectlySelectedElements = function() {
 
 	var elements = $(selection).filter("element");
 	return elements;
+}
+
+var cModel_GetAllSelectedConcepts = function() {
+
+	var concepts = $(selection).filter("concept"); // includes elements and relationships
+	return concepts;
 }
 
 

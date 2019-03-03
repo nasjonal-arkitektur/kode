@@ -1,0 +1,36 @@
+/*
+ * Namespace, update value for all selected objects.ajs
+ */
+"use strict";
+
+load(__DIR__ + "c_Namespace.ajs");
+
+
+console.clear();
+
+/***
+
+function UpdateNamespaceForSelectedConcepts(selectedConcepts, newNamespaceValue) {
+
+	selectedConcepts.prop(const_prop_namespace, newNamespaceValue);
+
+	// another way to code this: 
+	//selectedConcepts.each(function(c) {
+	//	c.prop(const_prop_namespace, newNamespaceValue);
+	//});	
+
+
+
+}
+
+
+function UserDialogInputNewNamespaceValue() {
+
+		var propValue = window.prompt("Which value do you want to set for '"+const_prop_namespace+"' (leave empty to cancel)?", "");	
+		return propValue;
+}
+
+***/
+
+
+cNamespace_UpdateNamespaceForSelectedConceptsWithUserDialog();	

@@ -1,0 +1,50 @@
+/*
+ * Remove namespace to name of selected objects
+ *
+ */
+
+ 
+load(__DIR__ + "c_Namespace.ajs");
+
+console.show();
+console.clear();
+
+/***
+
+function RemoveNamespaceFromNameOfSelectedConcepts () {
+
+	$(selection).each(function(e) {
+
+		var namespaceValue = e.prop(const_prop_namespace);
+		var namespaceWithPreAndPostfix = const_title_namespace_prefix + namespaceValue + const_title_namespace_postfix;
+		
+		console.log("Removing " + namespaceWithPreAndPostfix + " from displayed name of " + e.name);
+
+		if (e.namespaceValue != "")
+		{
+			var startPos = e.name.indexOf(const_title_namespace_prefix);
+			if (startPos >= 0) {
+			
+				var restOfString = e.name.substring(startPos);
+				var endPos = restOfString.indexOf(const_title_namespace_postfix);
+				
+				if (endPos >= 0) {
+				
+					var strToReplace = restOfString.substring(0, endPos + 1);
+					console.log("strToReplace = " + strToReplace); // temptest
+
+					e.name = e.name.replace(strToReplace, "");	
+				}
+			}
+		}	
+	});
+
+}
+
+
+RemoveNamespaceFromNameOfSelectedConcepts()
+
+**/
+
+cNamespace_RemoveNamespaceFromNameOfSelectedConcepts();
+
