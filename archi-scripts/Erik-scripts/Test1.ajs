@@ -16,6 +16,8 @@ load(__DIR__ + "c_Element.ajs");
 //load(__DIR__ + "c_Relation.ajs");
 //load(__DIR__ + "c_Viewpoint.ajs");
 
+console.log("Start Test1");
+
 
 /*
 load(__DIR__ + "Model_ReplacePropertyValues.ajs");
@@ -96,8 +98,8 @@ function test_findSubfoldersOfSelectedFolders()  {
 
 function test_findFolderAndSubfoldersOfSelectedFolders()  {
 	
-	selectedFolders = $(selection).filter("folder");
-	folderList = cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList(selectedFolders);
+	var selectedFolders = $(selection).filter("folder");
+	var folderList = cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList(selectedFolders);
 	
 	console.log("\nfolderList:");
 	folderList.each(function(f) {	
@@ -106,8 +108,68 @@ function test_findFolderAndSubfoldersOfSelectedFolders()  {
 	
 }
 
+function test_findViewsUnderSelectedFolders()  {
+	
+	var selectedFolders = $(selection).filter("folder");
+	var viewList = cFolder_GetAllViewsUnderGivenFolders(selectedFolders);
+	
+	console.log("\nviewList:");
+	viewList.each(function(v) {	
+		console.log("    " + v.name);
+	});	
+}
+
+function test_findItemsUnderSelectedFolders(itemType)  {
+	
+	console.log("\ntest_findItensUnderSelectedFolders, itemType = " + itemType);	
+	
+	var selectedFolders = $(selection).filter("folder");
+	var itemList = cFolder_GetAllItemsUnderGivenFoldersForGivenType(selectedFolders, itemType);
+	
+	console.log("itemList(" + itemType + "):");
+	itemList.each(function(item) {	
+		console.log("    " + item.name + " (" + item.type + ")");
+	});	
+}
+
+function test_findItemsWithGivenTypeAndNameUnderSelectedFolders(itemType, itemName, completeName, caseSensitiveName)  {
+	
+	var strComplete = "complete string"
+	if (!completeName)
+		strComplete = "substring ok";
+	
+	var strCaseSensitive = "caseSensitive";
+	if (!caseSensitiveName)
+		strCaseSensitive = "not caseSensitive";
+	
+	console.log("\ntest_findItemsWithGivenNameUnderSelectedFolders, itemType = " + itemType + ", itemName = " + itemName + ", " + strComplete +  ", " + strCaseSensitive);	
+
+	
+	var selectedFolders = $(selection).filter("folder");
+	var itemList = cFolder_GetAllItemsUnderGivenFoldersForGivenTypeAndName(selectedFolders, itemType, itemName, completeName, caseSensitiveName);
+	
+	console.log("itemList(" + itemType + "):");
+	itemList.each(function(item) {	
+		console.log("    " + item.name + " (" + item.type + ")");
+	});	
+}
+
+
 //test_findfromSelectedViews();
 //test_findSubfoldersOfSelectedFolders();
-test_findFolderAndSubfoldersOfSelectedFolders();
+//test_findFolderAntest_findItensUnderSelectedFoldersdSubfoldersOfSelectedFolders();
+
+("view");
+test_findItemsUnderSelectedFolders("concept");
+test_findItemsUnderSelectedFolders("element");
+test_findItemsUnderSelectedFolders("relationship");
+test_findItemsUnderSelectedFolders("business-actor");
+test_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "Erik", true, true);
+test_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "rik", true, true);
+test_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "rik", false, true);
+test_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "RIK", false, true);
+test_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "RIK", false, false);
+
+
 
 

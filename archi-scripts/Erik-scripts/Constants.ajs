@@ -2,7 +2,7 @@
  * Constants
  */
  
-var debug = false;
+var debug = true;
  
 var const_title_namespace_prefix = " [ns:";
 var const_title_namespace_postfix = "]";
