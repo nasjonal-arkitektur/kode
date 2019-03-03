@@ -1,0 +1,13 @@
+/*
+ * Remove namespace to name of selected objects
+ *
+ */
+
+ 
+load(__DIR__ + "/common/c_Namespace.ajs");
+
+console.show();
+console.clear();
+
+cNamespace_RemoveNamespaceFromNameOfSelectedConcepts();
+

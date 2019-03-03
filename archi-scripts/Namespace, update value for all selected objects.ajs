@@ -3,7 +3,7 @@
  */
 "use strict";
 
-load(__DIR__ + "c_Namespace.ajs");
+load(__DIR__ + "/common/c_Namespace.ajs");
 
 
 console.clear();

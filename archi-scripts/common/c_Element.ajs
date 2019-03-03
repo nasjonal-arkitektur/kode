@@ -52,7 +52,7 @@ function cElement_HighlightConceptsInViewBeforeMerge(elm) {
 	var otherSameElements = cView_GetOtherOccurencesInView(elm.view, elm);
 	otherSameElements.each(function(e) {
 	
-		debug?(console.log("Highlighting " + e.name + ", id = " + e.id + " in view " + elm.view )):true;
+		debug?(console.log("Highlighting occurence" + e.name + ", id = " + e.id + " in view " + elm.view )):true;
 		e.fillColor = "#03fa00"; // green
 	});
 	
