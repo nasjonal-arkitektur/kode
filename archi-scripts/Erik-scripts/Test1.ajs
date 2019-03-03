@@ -76,11 +76,11 @@ function test_findSubfoldersOfSelectedFolders()  {
 	
 	selectedFolders.each(function(f) {
 		
-		console.log("Selected folder: " + f.name);
+		console.log("\nSelected folder: " + f.name);
 		
 		
-		folderList = cFolder_GetListOfFolderAndSubfolders(f);
-		//folderList = cFolder_GetSubfolders(f);
+		//folderList = cFolder_GetListOfFolderAndSubfoldersForAGivenFolder(f);
+		folderList = cFolder_GetSubfolders(f);
 		
 				
 		console.log("\nfolderList:");
@@ -93,5 +93,21 @@ function test_findSubfoldersOfSelectedFolders()  {
 	});
 }
 
+
+function test_findFolderAndSubfoldersOfSelectedFolders()  {
+	
+	selectedFolders = $(selection).filter("folder");
+	folderList = cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList(selectedFolders);
+	
+	console.log("\nfolderList:");
+	folderList.each(function(f) {	
+		console.log("    " + f.name);
+	});	
+	
+}
+
 //test_findfromSelectedViews();
-test_findSubfoldersOfSelectedFolders();
+//test_findSubfoldersOfSelectedFolders();
+test_findFolderAndSubfoldersOfSelectedFolders();
+
+

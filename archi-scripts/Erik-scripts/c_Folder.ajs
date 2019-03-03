@@ -42,9 +42,9 @@ function cFolder_GetSubfolders(givenFolder) {
 	return descendantFolders;
 }
 
-function cFolder_GetListOfFolderAndSubfolders(givenFolder) {
+function cFolder_GetListOfFolderAndSubfoldersForAGivenFolder(givenFolder) {
 	
-	//console.log("cFolder_GetListOfFolderAndSubfolders for folder: " + givenFolder.name);	
+	//console.log("cFolder_GetListOfFolderAndSubfoldersForAGivenFolder for folder: " + givenFolder.name);	
 	var folders = $(givenFolder);
 	var subfolders = $(givenFolder).find().filter("folder");
 	folders.add(subfolders);
@@ -56,4 +56,60 @@ function cFolder_GetListOfFolderAndSubfolders(givenFolder) {
 	*/
 	
 	return folders;
+}
+
+function cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList(givenFolders) {
+	
+	console.log("cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList");	
+	
+	var folders = null;
+	var subfolders = null;
+	
+	if (givenFolders.size() == 0) {
+		window.alert("cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList: No folders selected! Exiting...");
+		exit();
+	}
+	
+	givenFolders.each(function(f) {
+		
+		
+		if (folders == null) {
+			folders = $(f);
+		}
+		else
+			folders.add($(f));
+		
+	
+		subfolders = cFolder_GetListOfFolderAndSubfoldersForAGivenFolder(f);
+		folders.add(subfolders);
+			
+			
+/*			
+		console.log("\ncFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList.folders:");
+		folders.each(function(f) {	
+		
+			console.log("    " + f.name);
+
+		});	
+*/
+		
+	});
+	
+	/*
+	folders.each(function(f) {
+		console.log("cFolder_GetListOfFolderAndSubfolders...    "  + f.name);			
+	});
+	*/
+	
+	return folders;
+}
+
+function cFolder_GetFolderViewsRecursive(givenFolder) {
+	
+	//console.log("cFolder_GetFolderViewsRecursive for folder: " + givenFolder.name);	
+	var folders = cFolder_GetListOfFolderAndSubfolders(givenFolder);
+	var views = null;
+
+	
+	return views;
 }
