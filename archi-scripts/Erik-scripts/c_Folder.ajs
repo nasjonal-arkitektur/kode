@@ -7,22 +7,53 @@ console.log("cFolder");
 //var m_folderName = null;
 //var m_folder = null;
 
-function Folder_InitExistingFromName(folderName) {
+/* NO! May be more than one folder with the same name!
+function cFolder_InitExistingFromName(folderName) {
 
 	var m_folder = $("folder."+ folderName).first();
 console.log("Found folder: " + m_folder);
 }
+*/
 
-function Folder_InitExistingFromArchiObj(folder) {
+function cFolder_InitExistingFromArchiObj(folder) {
 
 	m_folder = archiObj;
 }
 
-function Folder_InitNew(name, parentObj) {
+function cFolder_InitNew(name, parentObj) {
 
 
 }
 
-function Folder_GetId() {
+function cFolder_GetId() {
 
+}
+
+function cFolder_GetSubfolders(givenFolder) {
+
+	//console.log("cFolder_GetSubFolders for folder: " + givenFolder.name);
+	
+	var descendantFolders = $(givenFolder).find().filter("folder");
+	/*
+	descendantFolders.each(function(f) {
+		console.log("    " + givenFolder.name + " has descendant " + f.type + " (" + f.name + ")" );			
+	});
+	*/	
+	return descendantFolders;
+}
+
+function cFolder_GetListOfFolderAndSubfolders(givenFolder) {
+	
+	//console.log("cFolder_GetListOfFolderAndSubfolders for folder: " + givenFolder.name);	
+	var folders = $(givenFolder);
+	var subfolders = $(givenFolder).find().filter("folder");
+	folders.add(subfolders);
+	
+	/*
+	folders.each(function(f) {
+		console.log("cFolder_GetListOfFolderAndSubfolders...    "  + f.name);			
+	});
+	*/
+	
+	return folders;
 }

@@ -25,6 +25,28 @@ function cNamespace_conceptNameIncludesNamespace(c) {
 }
 
 
+
+function cNamespace_ListSelectedConceptsWithoutNamespace(selectedConcepts) {
+
+	window.prompt("cNamespace_ListSelectedConceptsWithoutNamespace implementation not finished. Exiting...");
+	exit(1);
+
+	var listOfConceptsWithoutNamespace = null;
+
+    //$("element").each(function(e) {
+   selectedConcepts.each(function(e) {	
+   
+		var namespaceValue = e.prop(const_prop_namespace);
+		
+	
+		if (!namespaceValue) {
+			console.log("Warning: " + " missing difi:namespace property for element " + e.name );
+        }
+    });
+	
+	//TBD: return listOfConceptsWithoutNamespace
+}
+
 function cNamespace_UpdateNamespaceForSelectedConcepts(selectedConcepts, newNamespaceValue) {
 
 
@@ -95,7 +117,8 @@ function cNamespace_UserDialogInputNewNamespaceValue() {
 }
 
 function cNamespace_UpdateNamespaceForSelectedConceptsWithUserDialog () {
-	var selectedConcepts = cModel_GetAllSelectedConcepts();
+
+	var selectedConcepts = cModel_GetAllDirectlySelectedConcepts();
 	if (selectedConcepts == null || selectedConcepts.size() < 1)
 	{
 		window.alert("No concepts selected. Exiting...");

@@ -77,10 +77,8 @@ function cElement_HighlightConceptsInViewBeforeMerge(elm) {
 function cElement_GetView(elm) {
 	
 	console.log("cElement_GetView")
-	
-	if 
-	
-	return elm.view;
+
+	return elm.view; // to be tested!???????????????
 	
 }
 

@@ -2,4 +2,12 @@
  * c_Relation
  */
  
-console.log("New Archi Script");
+
+var m_relation = null;
+
+console.log("c_Relation");
+
+function cRelation_InitExistingFromArchiObj(archiObj) {
+
+	m_relation= archiObj;
+}

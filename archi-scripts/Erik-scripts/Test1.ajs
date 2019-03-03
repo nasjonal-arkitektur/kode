@@ -5,6 +5,19 @@
 console.log("Test1");
 
 load(__DIR__ + "Constants.ajs");
+
+
+
+//c_Namespace
+load(__DIR__ + "c_Model.ajs");
+load(__DIR__ + "c_Folder.ajs");
+load(__DIR__ + "c_View.ajs");
+load(__DIR__ + "c_Element.ajs");
+//load(__DIR__ + "c_Relation.ajs");
+//load(__DIR__ + "c_Viewpoint.ajs");
+
+
+/*
 load(__DIR__ + "Model_ReplacePropertyValues.ajs");
 
 var changecount = 0;
@@ -15,3 +28,70 @@ console.log("Start Test1\n");
 changecount += Model_ReplacePropertyValues_ManualInput();
 
 console.log("\nEnd Test1; changecount = " + changecount);
+*/
+
+function test_findfromSelectedViews() {
+
+	$(selection).filter("archimate-diagram-model").each(function(v) {
+
+		$(v).find("element").each(function(e) {
+
+			
+			console.log(" " + "Element name: " + e.name );			
+			
+			
+			$(e).find().each(function(descendant) {
+				console.log("    " + e.name + " has descendant " + descendant.type + " (" + descendant.name + ")" );			
+			});
+			
+			
+		
+			$(e).children().each(function(child) {
+				console.log("    " + e.name + " has child " + child.name);			
+			});
+			
+			$(e).parents().each(function(parent) {
+					console.log("    " + e.name + " has some parent " + parent.name);			
+			});
+				
+			
+			$(e).parent().each(function(parent) {
+				console.log("    " + e.name + " has direct PARENT " + parent.name);			
+			});
+
+		});
+	});
+}
+
+function test_findSubfoldersOfSelectedFolders()  {
+
+	console.log("test_findSubfoldersOfSelectedFolders");
+
+	selectedFolders = $(selection).filter("folder");
+	
+	if (selectedFolders.size() == 0) {
+		window.alert("No folders selected. Exiting...");
+		exit();
+	}
+	
+	selectedFolders.each(function(f) {
+		
+		console.log("Selected folder: " + f.name);
+		
+		
+		folderList = cFolder_GetListOfFolderAndSubfolders(f);
+		//folderList = cFolder_GetSubfolders(f);
+		
+				
+		console.log("\nfolderList:");
+		folderList.each(function(f) {	
+		
+			console.log("    " + f.name);
+
+		});	
+		
+	});
+}
+
+//test_findfromSelectedViews();
+test_findSubfoldersOfSelectedFolders();

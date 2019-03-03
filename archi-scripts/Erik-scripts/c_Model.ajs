@@ -51,10 +51,28 @@ var cModel_GetDirectlySelectedElements = function() {
 	return elements;
 }
 
+var cModel_GetAllDirectlySelectedConcepts = function() {
+
+	// directly selected by multiple selection in folder or in view
+	
+	var concepts = $(selection).filter("concept"); // includes elements and relationships, BUT NOTE that "normal mouse window selection" will not include relation - you need to use CTRL(A)
+	return concepts;
+}
+
 var cModel_GetAllSelectedConcepts = function() {
 
-	var concepts = $(selection).filter("concept"); // includes elements and relationships
+	// Could be directly selected by multiple selection in folder or in view
+	// TODO: Could also be indirectly selected via parent view or folder !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+	var concepts = $(selection).filter("concept"); // includes elements and relationshipsv
 	return concepts;
+}
+
+
+
+var cModel_GetAllModelConcepts = function() {
+
+	return $("concept");
 }
 
 
