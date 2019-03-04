@@ -20,7 +20,13 @@ load(__DIR__ + "/test_CView.ajs");
 /*
 *	View related tests
 */
-test_CView_findAllViewsUnderGivenFolder(); //test_findItemsUnderSelectedFolders("view");
+
+
+//test_CView_GetDirectlySelectedViews();
+//test_CView_GetViewsUnderSelectedFoldersAndSubfolders();
+test_CView_GetAllSelectedViews();
+
+//test_CView_findAllConceptsInGivenViews();
 
 
 /*

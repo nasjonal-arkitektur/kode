@@ -11,8 +11,8 @@ load(__DIR__ + "../common/c_Model.ajs");
 load(__DIR__ + "../common/c_Folder.ajs");
 load(__DIR__ + "../common/c_View.ajs");
 load(__DIR__ + "../common/c_Element.ajs");
-//load(__DIR__ + "../common/c_Relation.ajs");
-//load(__DIR__ + "../common/c_Viewpoint.ajs");
+load(__DIR__ + "../common/c_Relation.ajs");
+load(__DIR__ + "../common/c_Viewpoint.ajs");
 
 
 load(__DIR__ + "/test_CFolder.ajs");
@@ -51,9 +51,44 @@ function test_findfromSelectedViews() {
 	});
 }
 
-function test_CView_findAllViewsUnderGivenFolder() {
+function test_CView_GetViewsUnderSelectedFoldersAndSubfolders() {
 
-	CTest_LogStartNewTest("test_CView_findAllViewsUnderGivenFolder");	
+						CTest_LogStartNewTest("test_CView_GetViewsUnderSelectedFoldersAndSubfolders");	
+	var views = CView_GetViewsUnderSelectedFoldersAndSubfolders(); 
+						CTest_LogObjectList(views);
+}
 
-	test_CFolder_findItemsUnderSelectedFolders("view");
+
+function test_CView_GetDirectlySelectedViews() {
+
+						CTest_LogStartNewTest("test_CView_getDirectlySelectedViews");	
+	var views = CView_GetDirectlySelectedViews();
+						CTest_LogObjectList(views);
+}
+
+
+function test_CView_GetAllSelectedViews() {
+
+						CTest_LogStartNewTest("test_CView_GetAllSelectedViews");	
+	var views = CView_GetAllSelectedViews();
+						CTest_LogObjectList(views);
+}
+
+function test_CView_findAllConceptsInSelectedViews() {
+
+
+	// TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	CTest_LogStartNewTest("test_CView_findAllConceptsInSelectedViews");	
+	
+	var selectedFolders = $(selection).filter("folder");
+	var itemList = cFolder_GetAllItemsUnderGivenFoldersForGivenType(selectedFolders, itemType);
+
+	itemList = cView_GetAllItemsInGivenViewsForGivenType("concept");
+	
+	console.log("itemList(" + itemType + "):");
+	itemList.each(function(item) {	
+		console.log("    " + item.name + " (" + item.type + ")");
+	});	
+	
+
 }

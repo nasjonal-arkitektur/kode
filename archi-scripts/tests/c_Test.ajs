@@ -16,7 +16,25 @@ function CTest_LogStartNewTest(testHeading) {
 }
 
 
-function CTest_Log(logTxt) {
+function CTest_LogText(textToLog) {
 
-	console.log(logTxt);
+	console.log(textToLog);
 }
+
+function CTest_LogObjectList(objects) {
+
+	//console.log("objects.size() = " + objects.size() );
+	
+	if (objects != null) {
+		var i = 0;
+		
+		objects.each(function(o) {
+			i++;
+			console.log("   " + i + ": " + o.name + " (" + o.id + ")" );	
+		});
+	}
+
+
+}
+
+

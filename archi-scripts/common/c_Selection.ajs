@@ -1,0 +1,19 @@
+/*
+ * c_Selection
+ */
+ 
+
+/*
+
+function CView_GetDirectlySelectedViews() {
+function CView_GetViewsUnderSelectedFoldersAndSubfolders() {
+function CView_GetAllSelectedViews() {	
+
+
+function test_CFolder_findSubfoldersOfSelectedFolders()  {
+function test_CFolder_findFolderAndSubfoldersOfSelectedFolders()  {
+function test_CFolder_findItemsUnderSelectedFolders(itemType)  {
+function test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders(itemType, itemName, completeName, caseSensitiveName)  {
+	
+	
+*/
