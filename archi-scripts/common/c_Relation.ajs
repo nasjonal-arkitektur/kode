@@ -5,8 +5,6 @@
 
 var m_relation = null;
 
-console.log("c_Relation");
-
 function cRelation_InitExistingFromArchiObj(archiObj) {
 
 	m_relation= archiObj;

@@ -1,0 +1,44 @@
+/*
+ * test_CView
+ */
+
+load(__DIR__ + "../common/Constants.ajs");
+
+//c_Namespace
+load(__DIR__ + "../common/c_Model.ajs");
+load(__DIR__ + "../common/c_Folder.ajs");
+load(__DIR__ + "../common/c_View.ajs");
+load(__DIR__ + "../common/c_Element.ajs");
+load(__DIR__ + "../common/c_Relation.ajs");
+load(__DIR__ + "../common/c_Viewpoint.ajs");
+
+
+load(__DIR__ + "/test_CFolder.ajs");
+load(__DIR__ + "/test_CView.ajs");
+
+
+/*
+*	View related tests
+*/
+test_CView_findAllViewsUnderGivenFolder(); //test_findItemsUnderSelectedFolders("view");
+
+
+/*
+*	Folder related tests
+*/
+
+/*
+test_CFolder_findSubfoldersOfSelectedFolders();
+test_CFolder_findFolderAndSubfoldersOfSelectedFolders();
+test_CFolder_findItemsUnderSelectedFolders("view");
+test_CFolder_findItemsUnderSelectedFolders("concept");
+test_CFolder_findItemsUnderSelectedFolders("element");
+test_CFolder_findItemsUnderSelectedFolders("relationship");
+test_CFolder_findItemsUnderSelectedFolders("business-actor");
+test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "Erik", true, true);
+test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "rik", true, true);
+test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "rik", false, true);
+test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "RIK", false, true);
+test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "RIK", false, false);
+
+*/

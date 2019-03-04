@@ -1,0 +1,22 @@
+/*
+ * c_Test
+ */
+ 
+function CTest_LogStartNewTest(testHeading) {
+
+	console.log(testHeading);
+	var underscoreChar = "-";
+	var underScore = "";
+	
+	for (i= 1; i <= testHeading.length; i++) // makes sense for some fonts only, but anyway...
+		underScore += underscoreChar;
+	
+	console.log(underScore);	
+
+}
+
+
+function CTest_Log(logTxt) {
+
+	console.log(logTxt);
+}

@@ -2,8 +2,6 @@
  * c_View
  */
  
-console.log("CView");
-
 var m_view = null;
 
 function cView_GetSelectedElements() {

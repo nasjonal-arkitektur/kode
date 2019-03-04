@@ -2,8 +2,8 @@
  * test_CFolder
  */
 
-console.log("test CFolder");
-
+ load(__DIR__ + "/c_Test.ajs");
+ 
 load(__DIR__ + "../common/Constants.ajs");
 
 
@@ -13,61 +13,13 @@ load(__DIR__ + "../common/c_Model.ajs");
 load(__DIR__ + "../common/c_Folder.ajs");
 load(__DIR__ + "../common/c_View.ajs");
 load(__DIR__ + "../common/c_Element.ajs");
-//load(__DIR__ + "../common/c_Relation.ajs");
-//load(__DIR__ + "../common/c_Viewpoint.ajs");
-
-console.log("Start test_CFolder");
+load(__DIR__ + "../common/c_Relation.ajs");
+load(__DIR__ + "../common/c_Viewpoint.ajs");
 
 
-/*
-load(__DIR__ + "Model_ReplacePropertyValues.ajs");
+function test_CFolder_findSubfoldersOfSelectedFolders()  {
 
-var changecount = 0;
-
-
-console.log("Start test_CFolder\n");
-
-changecount += Model_ReplacePropertyValues_ManualInput();
-
-console.log("\nEnd test_CFolder; changecount = " + changecount);
-*/
-
-function test_findfromSelectedViews() {
-
-	$(selection).filter("archimate-diagram-model").each(function(v) {
-
-		$(v).find("element").each(function(e) {
-
-			
-			console.log(" " + "Element name: " + e.name );			
-			
-			
-			$(e).find().each(function(descendant) {
-				console.log("    " + e.name + " has descendant " + descendant.type + " (" + descendant.name + ")" );			
-			});
-			
-			
-		
-			$(e).children().each(function(child) {
-				console.log("    " + e.name + " has child " + child.name);			
-			});
-			
-			$(e).parents().each(function(parent) {
-					console.log("    " + e.name + " has some parent " + parent.name);			
-			});
-				
-			
-			$(e).parent().each(function(parent) {
-				console.log("    " + e.name + " has direct PARENT " + parent.name);			
-			});
-
-		});
-	});
-}
-
-function test_findSubfoldersOfSelectedFolders()  {
-
-	console.log("test_findSubfoldersOfSelectedFolders");
+	console.log("test_CFolder_findSubfoldersOfSelectedFolders");
 
 	selectedFolders = $(selection).filter("folder");
 	
@@ -96,32 +48,37 @@ function test_findSubfoldersOfSelectedFolders()  {
 }
 
 
-function test_findFolderAndSubfoldersOfSelectedFolders()  {
-	
+function test_CFolder_findFolderAndSubfoldersOfSelectedFolders()  {
+
+	Ctest_CFolder_LogStartNewTest("test_CFolder_findFolderAndSubfoldersOfSelectedFolders");
+		
 	var selectedFolders = $(selection).filter("folder");
 	var folderList = cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList(selectedFolders);
 	
-	console.log("\nfolderList:");
+	CTest_Log("folderList:");
 	folderList.each(function(f) {	
-		console.log("    " + f.name);
+		CTest_Log("    " + f.name);
 	});	
 	
 }
 
-function test_findViewsUnderSelectedFolders()  {
+/**
+function test_CFolder_findViewsUnderSelectedFolders()  {
 	
 	var selectedFolders = $(selection).filter("folder");
 	var viewList = cFolder_GetAllViewsUnderGivenFolders(selectedFolders);
 	
-	console.log("\nviewList:");
+	console.log("viewList:");
 	viewList.each(function(v) {	
 		console.log("    " + v.name);
 	});	
 }
+**/
 
-function test_findItemsUnderSelectedFolders(itemType)  {
+
+function test_CFolder_findItemsUnderSelectedFolders(itemType)  {
 	
-	console.log("\ntest_findItensUnderSelectedFolders, itemType = " + itemType);	
+	CTest_LogStartNewTest("test_CFolder_findItensUnderSelectedFolders, itemType = " + itemType);	
 	
 	var selectedFolders = $(selection).filter("folder");
 	var itemList = cFolder_GetAllItemsUnderGivenFoldersForGivenType(selectedFolders, itemType);
@@ -132,7 +89,7 @@ function test_findItemsUnderSelectedFolders(itemType)  {
 	});	
 }
 
-function test_findItemsWithGivenTypeAndNameUnderSelectedFolders(itemType, itemName, completeName, caseSensitiveName)  {
+function test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders(itemType, itemName, completeName, caseSensitiveName)  {
 	
 	var strComplete = "complete string"
 	if (!completeName)
@@ -142,7 +99,7 @@ function test_findItemsWithGivenTypeAndNameUnderSelectedFolders(itemType, itemNa
 	if (!caseSensitiveName)
 		strCaseSensitive = "not caseSensitive";
 	
-	console.log("\ntest_findItemsWithGivenNameUnderSelectedFolders, itemType = " + itemType + ", itemName = " + itemName + ", " + strComplete +  ", " + strCaseSensitive);	
+	console.log("\ntest_CFolder_findItemsWithGivenNameUnderSelectedFolders, itemType = " + itemType + ", itemName = " + itemName + ", " + strComplete +  ", " + strCaseSensitive);	
 
 	
 	var selectedFolders = $(selection).filter("folder");
@@ -155,21 +112,23 @@ function test_findItemsWithGivenTypeAndNameUnderSelectedFolders(itemType, itemNa
 }
 
 
-//test_findfromSelectedViews();
-//test_findSubfoldersOfSelectedFolders();
-//test_findFolderAntest_findItensUnderSelectedFoldersdSubfoldersOfSelectedFolders();
 
-("view");
-test_findItemsUnderSelectedFolders("concept");
-test_findItemsUnderSelectedFolders("element");
-test_findItemsUnderSelectedFolders("relationship");
-test_findItemsUnderSelectedFolders("business-actor");
-test_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "Erik", true, true);
-test_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "rik", true, true);
-test_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "rik", false, true);
-test_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "RIK", false, true);
-test_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "RIK", false, false);
+/*
+//test_CFolder_findfromSelectedViews();
+//test_CFolder_findSubfoldersOfSelectedFolders();
+//test_CFolder_findFolderAndSubfoldersOfSelectedFolders();
 
+test_CFolder_findItemsUnderSelectedFolders("view");
+test_CFolder_findItemsUnderSelectedFolders("concept");
+test_CFolder_findItemsUnderSelectedFolders("element");
+test_CFolder_findItemsUnderSelectedFolders("relationship");
+test_CFolder_findItemsUnderSelectedFolders("business-actor");
+test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "Erik", true, true);
+test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "rik", true, true);
+test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "rik", false, true);
+test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "RIK", false, true);
+test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "RIK", false, false);
 
+*/
 
 

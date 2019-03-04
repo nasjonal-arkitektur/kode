@@ -3,8 +3,6 @@
  */
 
 
-console.log("cFolder");
-
 //var m_folderName = null;
 //var m_folder = null;
 
@@ -91,6 +89,7 @@ function cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList(givenFolders) 
 	return folders;
 }
 
+/***
 function cFolder_GetAllViewsUnderGivenFolders(givenFolders) {
 	
 	var folders = cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList(givenFolders);
@@ -132,6 +131,8 @@ function cFolder_GetAllConceptsUnderGivenFolders(givenFolders) {
 
 	return concepts;
 }
+***/
+
 
 function cFolder_GetAllItemsUnderGivenFoldersForGivenType(givenFolders, itemType) {
 	
