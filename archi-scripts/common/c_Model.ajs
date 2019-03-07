@@ -116,3 +116,11 @@ var cModel_FindAllModelElementsWithName = function(elementName) {
         return ( (o.name == elementName) );
     });
 }
+
+
+var cModel_GetDuplicateModelItems = function(elm) {
+
+    return $("element").filter(function(o) {
+        return ( (o.name == elm.name) && (o.type == elm.type) );
+    });
+}

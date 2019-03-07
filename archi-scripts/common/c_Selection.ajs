@@ -3,17 +3,225 @@
  */
  
 
-/*
+load(__DIR__ + "../common/Constants.ajs");
 
-function CView_GetDirectlySelectedViews() {
-function CView_GetViewsUnderSelectedFoldersAndSubfolders() {
-function CView_GetAllSelectedViews() {	
+load(__DIR__ + "../common/c_Collection.ajs");
+
+//c_Namespace
+load(__DIR__ + "../common/c_Model.ajs");
+load(__DIR__ + "../common/c_Folder.ajs");
+load(__DIR__ + "../common/c_View.ajs");
+load(__DIR__ + "../common/c_Element.ajs");
+load(__DIR__ + "../common/c_Relation.ajs");
+load(__DIR__ + "../common/c_Viewpoint.ajs");
 
 
-function test_CFolder_findSubfoldersOfSelectedFolders()  {
-function test_CFolder_findFolderAndSubfoldersOfSelectedFolders()  {
-function test_CFolder_findItemsUnderSelectedFolders(itemType)  {
-function test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders(itemType, itemName, completeName, caseSensitiveName)  {
+
+function CSelection_findSubfoldersOfSelectedFolders()  {
+
+	console.log("CSelection_findSubfoldersOfSelectedFolders");
+
+	selectedFolders = $(selection).filter("folder");
 	
+	if (selectedFolders.size() == 0) {
+		window.alert("No folders selected. Exiting...");
+		exit();
+	}
 	
-*/
+	selectedFolders.each(function(f) {
+		
+		console.log("\nSelected folder: " + f.name);
+		
+		
+		//folderList = cFolder_GetListOfFolderAndSubfoldersForAGivenFolder(f);
+		folderList = cFolder_GetSubfolders(f);
+		
+				
+		console.log("\nfolderList:");
+		folderList.each(function(f) {	
+		
+			console.log("    " + f.name);
+
+		});	
+		
+	});
+}
+
+
+function CSelection_findFolderAndSubfoldersOfSelectedFolders()  {
+
+	CCSelection_LogStartNewTest("CSelection_findFolderAndSubfoldersOfSelectedFolders");
+		
+	var selectedFolders = $(selection).filter("folder");
+	var folderList = cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList(selectedFolders);
+	
+	CTest_Log("folderList:");
+	folderList.each(function(f) {	
+		CTest_Log("    " + f.name);
+	});	
+	
+	return folderList;
+	
+}
+
+
+
+
+function CSelection_findItemsWithGivenTypeAndNameUnderSelectedFolders(itemType, itemName, completeName, caseSensitiveName)  {
+	
+	var strComplete = "complete string"
+	if (!completeName)
+		strComplete = "substring ok";
+	
+	var strCaseSensitive = "caseSensitive";
+	if (!caseSensitiveName)
+		strCaseSensitive = "not caseSensitive";
+	
+	console.log("\nCSelection_findItemsWithGivenNameUnderSelectedFolders, itemType = " + itemType + ", itemName = " + itemName + ", " + strComplete +  ", " + strCaseSensitive);	
+
+	
+	var selectedFolders = $(selection).filter("folder");
+	var itemList = cFolder_GetAllItemsUnderGivenFoldersForGivenTypeAndName(selectedFolders, itemType, itemName, completeName, caseSensitiveName);
+	
+	console.log("itemList(" + itemType + "):");
+	itemList.each(function(item) {	
+		console.log("    " + item.name + " (" + item.type + ")");
+	});	
+}
+
+
+/**************************************************
+**************************************************/
+
+
+function CSelection_GetViewsUnderSelectedFoldersAndSubfolders() {
+
+						CTest_LogStartNewTest("CSelection_GetViewsUnderSelectedFoldersAndSubfolders");	
+	var views = CView_GetViewsUnderSelectedFoldersAndSubfolders(); 
+						CTest_LogObjectList(views);
+}
+
+
+function CSelection_GetDirectlySelectedViews() {
+
+						CTest_LogStartNewTest("CSelection_getDirectlySelectedViews");	
+	var views = CView_GetDirectlySelectedViews();
+						CTest_LogObjectList(views);
+}
+
+
+function CSelection_GetAllSelectedViews() {
+
+						CTest_LogStartNewTest("CSelection_GetAllSelectedViews");	
+	var views = CView_GetAllSelectedViews();
+						CTest_LogObjectList(views);
+}
+
+
+
+
+var CSelection_GetDuplicatesInlistGivenElement = function(elm, list) {
+
+	return list.filter(function(o) {
+        return ( (o.name == elm.name) && (o.type == elm.type) );
+    });
+}
+
+var CSelection_FindElementsWithNameInList = function(elementName, list) {
+
+    return list.filter(function(o) {
+        return ( (o.name == elementName) );
+    });
+}
+
+var CSelection_GetDuplicatesInlistGivenElementNameNotType = function(name, list) {
+
+	var elementsWithSameName = CSelection_FindElementsWithNameInList(name, list); // may contain several element types
+	var allDuplicates = [];
+	var duplicates = null;
+	var types = [];
+	elementsWithSameName.each(function(e) {
+		console.log("      " + e.name + ", " + e.type + ", " + ", " + " Id = " + e.id);
+		
+		if (types.indexOf(e.type) < 0) { // don't add duplicate values to this array
+			types.push(e.type); // add to end of array
+			duplicates = CSelection_GetDuplicatesInlistGivenElement(e, list);
+			if (duplicates.size() > 1)
+				allDuplicates.push(duplicates); // add to end of array 
+		}
+
+	});
+	
+	//console.log("Number of types: " + types.length );
+	//console.log("Number of types with duplicates: " + allDuplicates.length );
+	return allDuplicates;
+	
+}
+
+
+
+
+function CSelection_findAllConceptsInSelectedViews() {
+
+
+	// TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!????????????????????????????
+	CTest_LogStartNewTest("CSelection_findAllConceptsInSelectedViews");	
+	
+	var selectedFolders = $(selection).filter("folder");
+	var itemList = cFolder_GetAllItemsUnderGivenFoldersForGivenType(selectedFolders, itemType);
+
+	itemList = cView_GetAllItemsInGivenViewsForGivenType("concept");
+	
+	console.log("itemList(" + itemType + "):");
+	itemList.each(function(item) {	
+		console.log("    " + item.name + " (" + item.type + ")");
+	});	
+}
+
+function CSelection_findItemsUnderSelectedFolders(itemType)  {
+	
+	var selectedFolders = $(selection).filter("folder");
+	var allItems = cFolder_GetAllItemsUnderGivenFoldersForGivenType(selectedFolders, itemType);
+	var folderItems = null;
+	//var emptyArchiCollection = selectedFolders.filter("emptyArchiCollection"); // just a  way to declare an empty Archi collection
+	var resultingItems = null; //emptyArchiCollection.clone();
+	 
+	
+	selectedFolders.each(function(folder) {
+		
+		folderItems = $(folder).find().filter(itemType);
+		
+		if (itemType == "concept") { //don't add the same concept several times
+	
+			folderItems.each(function(concept) {	
+			
+				if (resultingItems == null) {
+					resultingItems = $(concept.concept);
+				}
+				else {
+					
+					var conceptInList = cCollection_GetItemsWithGivenId(resultingItems, concept.concept);
+					
+					if (conceptInList.size() < 1)
+						resultingItems.add($(concept.concept));
+				}
+
+			});
+	
+		}
+		else {
+	
+			if (resultingItems == null) {
+				resultingItems = folderItems;
+			}
+			else {
+		
+				resultingItems.add(folderItems);
+			}
+		}
+
+		
+	});
+
+	return resultingItems;
+}

@@ -86,7 +86,4 @@ var lib_getDuplicatesInlistGivenElementNameNotType = function(name, list) {
 	//console.log("Number of types with duplicates: " + allDuplicates.length );
 	return allDuplicates;
 	
-	
-	
-	
 }

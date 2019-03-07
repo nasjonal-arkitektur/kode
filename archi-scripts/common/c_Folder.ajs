@@ -2,7 +2,8 @@
  * c_Folder
  */
 
-
+load(__DIR__ + "../common/c_Collection.ajs");
+ 
 //var m_folderName = null;
 //var m_folder = null;
 
@@ -136,8 +137,8 @@ function cFolder_GetAllConceptsUnderGivenFolders(givenFolders) {
 
 function cFolder_GetAllItemsUnderGivenFoldersForGivenType(givenFolders, itemType) {
 	
-	//if (debug)
-	//	console.log("cFolder_GetAllItemsUnderGivenFolders, itemType = " + itemType);	
+	if (debug)
+		console.log("cFolder_GetAllItemsUnderGivenFolders, itemType = " + itemType);	
 	
 	var folders = cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList(givenFolders);
 	var items = null;
@@ -145,18 +146,14 @@ function cFolder_GetAllItemsUnderGivenFoldersForGivenType(givenFolders, itemType
 	
 	folders.each(function(folder) {
 		
-		//if (debug)
-		//	console.log("\ncFolder_GetAllItemsUnderGivenFolders, folder = " + folder.name);	
-		
-		
 		fItems = $(folder).find().filter(itemType);
 		
 		if (items == null) {
 			items = fItems;
 		}
-		else
+		else {
 			items.add(fItems);
-		
+		}
 	});
 
 	return items;

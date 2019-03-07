@@ -1,0 +1,45 @@
+/*
+ * c_Collection
+ */
+ 
+
+load(__DIR__ + "../common/Constants.ajs");
+
+/*
+function cCollection_AlreadyThere(collection, object) { // tested/working????????????????????????????????????????
+	
+	if (debug2)
+		console.log("cCollection_AlreadyThere, object.name = " + object.name);	
+
+	for (var i = 0; i < collection.size(); i++){
+	
+							if (debug2)
+								console.log("cCollection_AlreadyThere, collection[i].name = " + collection[i].name);	
+							
+		if (collection[i].name == object.name) {
+			
+							if (debug2)
+								console.log("cCollection_AlreadyThere, collection[i].name ======= " + collection[i].name);	
+	
+			return true;
+		}
+	}
+
+	return false;
+}
+*/
+
+var cCollection_GetDuplicateItems = function(coll, obj) {
+
+    return coll.filter(function(o) {
+        return ( (o.name == obj.name) && (o.type == obj.type) );
+    });
+}
+
+var cCollection_GetItemsWithGivenId = function(coll, obj) {
+
+	return coll.filter(function(o) {
+		return (o.id == obj.id) ; 
+        
+    });
+}

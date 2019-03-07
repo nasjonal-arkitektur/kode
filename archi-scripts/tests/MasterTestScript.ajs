@@ -1,9 +1,10 @@
 /*
- * test_CView
+ * MasterTestScript
  */
 
+ 
+/** 
 load(__DIR__ + "../common/Constants.ajs");
-
 //c_Namespace
 load(__DIR__ + "../common/c_Model.ajs");
 load(__DIR__ + "../common/c_Folder.ajs");
@@ -11,10 +12,11 @@ load(__DIR__ + "../common/c_View.ajs");
 load(__DIR__ + "../common/c_Element.ajs");
 load(__DIR__ + "../common/c_Relation.ajs");
 load(__DIR__ + "../common/c_Viewpoint.ajs");
+*/
 
+load(__DIR__ + "../common/c_selection.ajs");
 
-load(__DIR__ + "/test_CFolder.ajs");
-load(__DIR__ + "/test_CView.ajs");
+load(__DIR__ + "c_Test.ajs");
 
 
 /*
@@ -22,29 +24,53 @@ load(__DIR__ + "/test_CView.ajs");
 */
 
 
-//test_CView_GetDirectlySelectedViews();
-//test_CView_GetViewsUnderSelectedFoldersAndSubfolders();
-test_CView_GetAllSelectedViews();
+//CSelection_GetDirectlySelectedViews();
+//CSelection_GetViewsUnderSelectedFoldersAndSubfolders();
+//  CSelection_GetAllSelectedViews();
 
-//test_CView_findAllConceptsInGivenViews();
+//CSelection_findAllConceptsInGivenViews();
 
 
 /*
 *	Folder related tests
 */
 
-/*
-test_CFolder_findSubfoldersOfSelectedFolders();
-test_CFolder_findFolderAndSubfoldersOfSelectedFolders();
-test_CFolder_findItemsUnderSelectedFolders("view");
-test_CFolder_findItemsUnderSelectedFolders("concept");
-test_CFolder_findItemsUnderSelectedFolders("element");
-test_CFolder_findItemsUnderSelectedFolders("relationship");
-test_CFolder_findItemsUnderSelectedFolders("business-actor");
-test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "Erik", true, true);
-test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "rik", true, true);
-test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "rik", false, true);
-test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "RIK", false, true);
-test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "RIK", false, false);
 
+//CSelection_findSubfoldersOfSelectedFolders();
+//CSelection_findFolderAndSubfoldersOfSelectedFolders();
+// CSelection_findItemsUnderSelectedFolders("view");
+
+
+/*
+var itemType = "concept";
+	CTest_LogStartNewTest("CSelection_findItensUnderSelectedFolders, itemType = " + itemType);	
+var itemList = CSelection_findItemsUnderSelectedFolders(itemType);
+	console.log("itemList(" + itemType + "):");
+	itemList.each(function(item) {	
+		console.log("    " + item.name + " (" + item.type + ")" + " " + item.concept.id);
+	});
+	window.alert("Found " + itemList.size() + " " + itemType + "s");
 */
+
+
+
+//CSelection_findItemsUnderSelectedFolders("element");
+var itemType = "element"; //!!!!!!!!!!
+	CTest_LogStartNewTest("CSelection_findItensUnderSelectedFolders, itemType = " + itemType);	
+var itemList = CSelection_findItemsUnderSelectedFolders(itemType);
+	console.log("itemList(" + itemType + "):");
+	itemList.each(function(item) {	
+		console.log("    " + item.name + " (" + item.type + ")" + " " + item.id);
+	});
+	window.alert("Found " + itemList.size() + " " + itemType + "s");
+
+
+
+//CSelection_findItemsUnderSelectedFolders("relationship");
+//CSelection_findItemsUnderSelectedFolders("business-actor");
+//CSelection_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "Erik", true, true);
+//CSelection_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "rik", true, true);
+//CSelection_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "rik", false, true);
+//CSelection_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "RIK", false, true);
+//CSelection_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "RIK", false, false);
+

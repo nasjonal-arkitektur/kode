@@ -86,7 +86,9 @@ function test_CFolder_findItemsUnderSelectedFolders(itemType)  {
 	console.log("itemList(" + itemType + "):");
 	itemList.each(function(item) {	
 		console.log("    " + item.name + " (" + item.type + ")");
-	});	
+	});
+	
+	window.alert("Found " + itemList.size() + " " + itemType + "s");
 }
 
 function test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders(itemType, itemName, completeName, caseSensitiveName)  {
@@ -112,23 +114,5 @@ function test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders(itemType
 }
 
 
-
-/*
-//test_CFolder_findfromSelectedViews();
-//test_CFolder_findSubfoldersOfSelectedFolders();
-//test_CFolder_findFolderAndSubfoldersOfSelectedFolders();
-
-test_CFolder_findItemsUnderSelectedFolders("view");
-test_CFolder_findItemsUnderSelectedFolders("concept");
-test_CFolder_findItemsUnderSelectedFolders("element");
-test_CFolder_findItemsUnderSelectedFolders("relationship");
-test_CFolder_findItemsUnderSelectedFolders("business-actor");
-test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "Erik", true, true);
-test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "rik", true, true);
-test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "rik", false, true);
-test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "RIK", false, true);
-test_CFolder_findItemsWithGivenTypeAndNameUnderSelectedFolders("business-actor", "RIK", false, false);
-
-*/
 
 
