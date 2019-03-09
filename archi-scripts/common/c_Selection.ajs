@@ -19,9 +19,11 @@ load(__DIR__ + "../common/c_Viewpoint.ajs");
 
 function CSelection_findSubfoldersOfSelectedFolders()  {
 
-	console.log("CSelection_findSubfoldersOfSelectedFolders");
-
 	selectedFolders = $(selection).filter("folder");
+	var folderList = cFolder_GetListOfSubfoldersForAGivenFolderList(selectedFolders);
+	return folderList;	
+	
+/*
 	
 	if (selectedFolders.size() == 0) {
 		window.alert("No folders selected. Exiting...");
@@ -30,10 +32,8 @@ function CSelection_findSubfoldersOfSelectedFolders()  {
 	
 	selectedFolders.each(function(f) {
 		
-		console.log("\nSelected folder: " + f.name);
+		console.log("\nSelectedsdsad folder: " + f.name);
 		
-		
-		//folderList = cFolder_GetListOfFolderAndSubfoldersForAGivenFolder(f);
 		folderList = cFolder_GetSubfolders(f);
 		
 				
@@ -45,26 +45,18 @@ function CSelection_findSubfoldersOfSelectedFolders()  {
 		});	
 		
 	});
+*/
+
 }
 
 
 function CSelection_findFolderAndSubfoldersOfSelectedFolders()  {
 
-	CCSelection_LogStartNewTest("CSelection_findFolderAndSubfoldersOfSelectedFolders");
-		
 	var selectedFolders = $(selection).filter("folder");
 	var folderList = cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList(selectedFolders);
-	
-	CTest_Log("folderList:");
-	folderList.each(function(f) {	
-		CTest_Log("    " + f.name);
-	});	
-	
 	return folderList;
 	
 }
-
-
 
 
 function CSelection_findItemsWithGivenTypeAndNameUnderSelectedFolders(itemType, itemName, completeName, caseSensitiveName)  {
@@ -77,29 +69,16 @@ function CSelection_findItemsWithGivenTypeAndNameUnderSelectedFolders(itemType, 
 	if (!caseSensitiveName)
 		strCaseSensitive = "not caseSensitive";
 	
-	console.log("\nCSelection_findItemsWithGivenNameUnderSelectedFolders, itemType = " + itemType + ", itemName = " + itemName + ", " + strComplete +  ", " + strCaseSensitive);	
-
-	
 	var selectedFolders = $(selection).filter("folder");
 	var itemList = cFolder_GetAllItemsUnderGivenFoldersForGivenTypeAndName(selectedFolders, itemType, itemName, completeName, caseSensitiveName);
-	
-	console.log("itemList(" + itemType + "):");
-	itemList.each(function(item) {	
-		console.log("    " + item.name + " (" + item.type + ")");
-	});	
+
+	return itemList;
+
 }
 
 
 /**************************************************
 **************************************************/
-
-
-function CSelection_GetViewsUnderSelectedFoldersAndSubfolders() {
-
-						CTest_LogStartNewTest("CSelection_GetViewsUnderSelectedFoldersAndSubfolders");	
-	var views = CView_GetViewsUnderSelectedFoldersAndSubfolders(); 
-						CTest_LogObjectList(views);
-}
 
 
 function CSelection_GetDirectlySelectedViews() {
@@ -180,10 +159,20 @@ function CSelection_findAllConceptsInSelectedViews() {
 
 function CSelection_findItemsUnderSelectedFolders(itemType)  {
 	
+	
 	var selectedFolders = $(selection).filter("folder");
-	var allItems = cFolder_GetAllItemsUnderGivenFoldersForGivenType(selectedFolders, itemType);
+	
+	if (selectedFolders.size() < 1) {
+		
+		//window.alert("Warning: " + "selectedFolders = 0 in function CSelection_findItemsUnderSelectedFolders(itemType)");
+		console.log("Warning: " + "selectedFolders = 0 in function CSelection_findItemsUnderSelectedFolders(itemType)");
+	}
+		
+	
+	
+	
+	//var allItems = cFolder_GetAllItemsUnderGivenFoldersForGivenType(selectedFolders, itemType);
 	var folderItems = null;
-	//var emptyArchiCollection = selectedFolders.filter("emptyArchiCollection"); // just a  way to declare an empty Archi collection
 	var resultingItems = null; //emptyArchiCollection.clone();
 	 
 	
@@ -191,6 +180,27 @@ function CSelection_findItemsUnderSelectedFolders(itemType)  {
 		
 		folderItems = $(folder).find().filter(itemType);
 		
+		folderItems.each(function(item) {	
+		
+			if (itemType == "concept")
+				item = item.concept;
+		
+			if (resultingItems == null) {
+				resultingItems = $(item);
+			}
+			else {
+				
+				var conceptInList = cCollection_GetItemsWithGivenId(resultingItems, item);
+				
+				if (conceptInList.size() < 1)
+					resultingItems.add($(item));
+			}
+
+		});		
+		
+		
+		/*
+				
 		if (itemType == "concept") { //don't add the same concept several times
 	
 			folderItems.each(function(concept) {	
@@ -219,6 +229,7 @@ function CSelection_findItemsUnderSelectedFolders(itemType)  {
 				resultingItems.add(folderItems);
 			}
 		}
+		*/
 
 		
 	});

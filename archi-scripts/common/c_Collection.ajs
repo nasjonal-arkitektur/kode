@@ -39,7 +39,7 @@ var cCollection_GetDuplicateItems = function(coll, obj) {
 var cCollection_GetItemsWithGivenId = function(coll, obj) {
 
 	return coll.filter(function(o) {
-		return (o.id == obj.id) ; 
+		return (o.id == obj.id) ;  
         
     });
 }

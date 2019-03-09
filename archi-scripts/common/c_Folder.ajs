@@ -42,18 +42,44 @@ function cFolder_GetSubfolders(givenFolder) {
 	return descendantFolders;
 }
 
+function cFolder_GetListOfSubfoldersForAGivenFolder(givenFolder) {
+	
+	var subfolders = $(givenFolder).find().filter("folder");
+	return subfolders;
+}
+	 
 function cFolder_GetListOfFolderAndSubfoldersForAGivenFolder(givenFolder) {
 	
-	//console.log("cFolder_GetListOfFolderAndSubfoldersForAGivenFolder for folder: " + givenFolder.name);	
 	var folders = $(givenFolder);
 	var subfolders = $(givenFolder).find().filter("folder");
 	folders.add(subfolders);
 	
-	/*
-	folders.each(function(f) {
-		console.log("cFolder_GetListOfFolderAndSubfolders...    "  + f.name);			
+	return folders;
+}
+
+function cFolder_GetListOfSubfoldersForAGivenFolderList(givenFolders) {
+
+	var folders = null;
+	var subfolders = null;
+	
+	if (givenFolders.size() == 0 ) {
+		window.alert("cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList: No folders selected! Exiting...");
+		exit();
+	}
+	
+	givenFolders.each(function(f) {
+		
+		subfolders = cFolder_GetListOfSubfoldersForAGivenFolder(f);
+				
+				
+		if (folders == null) {
+			folders = subfolders;
+		}
+		else {
+			folders.add(subfolders);
+		}
+			
 	});
-	*/
 	
 	return folders;
 }
@@ -137,9 +163,6 @@ function cFolder_GetAllConceptsUnderGivenFolders(givenFolders) {
 
 function cFolder_GetAllItemsUnderGivenFoldersForGivenType(givenFolders, itemType) {
 	
-	if (debug)
-		console.log("cFolder_GetAllItemsUnderGivenFolders, itemType = " + itemType);	
-	
 	var folders = cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList(givenFolders);
 	var items = null;
 	var fItems = null;
@@ -152,7 +175,9 @@ function cFolder_GetAllItemsUnderGivenFoldersForGivenType(givenFolders, itemType
 			items = fItems;
 		}
 		else {
+	
 			items.add(fItems);
+			
 		}
 	});
 
@@ -160,6 +185,8 @@ function cFolder_GetAllItemsUnderGivenFoldersForGivenType(givenFolders, itemType
 }
 
 function cFolder_GetAllItemsUnderGivenFoldersForGivenTypeAndName(givenFolders, itemType, itemName, completeName, caseSensitiveName) {
+
+	//console.log("cFolder_GetAllItemsUnderGivenFoldersForGivenTypeAndName", itemType, itemName);
 
 	var items = null;
 	var itemsUnderGivenFoldersForGivenType = cFolder_GetAllItemsUnderGivenFoldersForGivenType(givenFolders, itemType);
@@ -173,12 +200,12 @@ function cFolder_GetAllItemsUnderGivenFoldersForGivenTypeAndName(givenFolders, i
 		else if (!completeName && caseSensitiveName)
 			return ( item.name.indexOf(itemName) >= 0 );
 		else if (!completeName && !caseSensitiveName)
-			return ( item.name.toLowerCase().indexOf(itemName.toLowerCase() >= 0 )); 
+			return ( item.name.toLowerCase().indexOf(itemName.toLowerCase()) >= 0 ); 
 		else 
 			window.alert("Error in cFolder_GetAllItemsUnderGivenFoldersForGivenTypeAndName: Unexpected input");
     });
 	
-	return items;
+	
 	
 	
 }

@@ -4,15 +4,16 @@
  
 function CTest_LogStartNewTest(testHeading) {
 
-	console.log(testHeading);
+
 	var underscoreChar = "-";
 	var underScore = "";
 	
-	for (i= 1; i <= testHeading.length; i++) // makes sense for some fonts only, but anyway...
+	for (i= 1; i <= testHeading.length; i++) // makes perfect sense for some fonts only, but anyway...
 		underScore += underscoreChar;
 	
 	console.log(underScore);	
-
+	console.log(testHeading);
+	console.log(underScore);
 }
 
 
@@ -21,20 +22,69 @@ function CTest_LogText(textToLog) {
 	console.log(textToLog);
 }
 
-function CTest_LogObjectList(objects) {
+function CTest_LogObjectListOfType(items, itemType) {
 
-	//console.log("objects.size() = " + objects.size() );
-	
-	if (objects != null) {
+	if (items != null) {
 		var i = 0;
+		console.log("No." + "\t" + "Name" + "\t" + "Type" + "\t" + "Id");
+		items.each(function(item) {	
 		
-		objects.each(function(o) {
-			i++;
-			console.log("   " + i + ": " + o.name + " (" + o.id + ")" );	
+			console.log(++i + "\t" + item.name + "\t" + item.type + "\t" + item.id);
+			//console.log(++i + "\t" + item.name + "\t" + item.type + "\t" + item.id + "\t" + item.parent);
 		});
 	}
-
-
+	else {
+		console.log("Found 0 selected " + itemType + "s");
+	}
 }
 
+function CTest_LogObjectList(items) {
+
+	if (items != null) {
+		var i = 0;
+		console.log("No." + "\t" + "Name" + "\t" + "Id");
+		items.each(function(item) {	
+		
+			console.log(++i + "\t" + item.name + "\t" + item.id);
+			//console.log(++i + "\t" + item.name + "\t" + item.type + "\t" + item.id + "\t" + item.parent);
+		});
+	}
+	else {
+		console.log("Found 0 selected items");
+	}
+}
+
+function CTest_CSelection_findItemsUnderSelectedFolders(testnum, itemType) {
+	
+	CTest_LogStartNewTest("Test " + testnum + ": " + "CTest_CSelection_findItemsUnderSelectedFolders" + ", itemType = " + itemType);	
+	var itemList = CSelection_findItemsUnderSelectedFolders(itemType);
+	CTest_LogObjectListOfType(itemList, itemType);
+}
+
+	
+function CTest_CSelection_findFoldersAndSubfoldersOfSelectedFolders(testnum) {
+
+	CTest_LogStartNewTest("Test " + testnum + ": " + "CTest_CSelection_findFoldersAndSubfoldersOfSelectedFolders");
+	var allFolders = CSelection_findFolderAndSubfoldersOfSelectedFolders();
+	CTest_LogObjectList(allFolders);
+}
+
+function CTest_CSelection_findSubfoldersOfSelectedFolders(testnum) {
+	
+	CTest_LogStartNewTest("Test " + testnum + ": " + "CTest_CSelection_findSubfoldersOfSelectedFolders");
+	var allFolders = CSelection_findSubfoldersOfSelectedFolders();
+	CTest_LogObjectList(allFolders);
+}
+
+function CTest_CSelection_findItemsWithGivenTypeAndNameUnderSelectedFolders(testnum, itemType, itemName, completeName, caseSensitiveName) {
+
+
+	CTest_LogStartNewTest("Test " + testnum + ": " + "CTest_CSelection_findItemsWithGivenTypeAndNameUnderSelectedFolders(" + itemType + ", " + itemName + ", " + completeName + ", " + caseSensitiveName + ")" );
+	
+	var selectedItems = CSelection_findItemsWithGivenTypeAndNameUnderSelectedFolders(itemType, itemName, completeName, caseSensitiveName);
+	CSelection_findItemsWithGivenTypeAndNameUnderSelectedFolders(++testnum, "business-actor", "Erik", true, true);
+	
+	CTest_LogObjectList(selectedItems);
+	
+}
 
