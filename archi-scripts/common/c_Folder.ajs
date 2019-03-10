@@ -62,9 +62,11 @@ function cFolder_GetListOfSubfoldersForAGivenFolderList(givenFolders) {
 	var folders = null;
 	var subfolders = null;
 	
+	
 	if (givenFolders.size() == 0 ) {
-		window.alert("cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList: No folders selected! Exiting...");
-		exit();
+		//window.alert("cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList: No folders selected! Exiting...");
+		//exit();
+		return null;
 	}
 	
 	givenFolders.each(function(f) {
@@ -92,8 +94,9 @@ function cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList(givenFolders) 
 	var subfolders = null;
 	
 	if (givenFolders.size() == 0) {
-		window.alert("cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList: No folders selected! Exiting...");
-		exit();
+		//window.alert("cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList: No folders selected! Exiting...");
+		//exit();
+		return null;
 	}
 	
 	givenFolders.each(function(f) {
@@ -166,6 +169,9 @@ function cFolder_GetAllItemsUnderGivenFoldersForGivenType(givenFolders, itemType
 	var folders = cFolder_GetListOfFoldersAndSubfoldersForAGivenFolderList(givenFolders);
 	var items = null;
 	var fItems = null;
+	
+	if (folders == null)
+		return null;
 	
 	folders.each(function(folder) {
 		

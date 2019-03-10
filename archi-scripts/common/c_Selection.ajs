@@ -81,23 +81,6 @@ function CSelection_findItemsWithGivenTypeAndNameUnderSelectedFolders(itemType, 
 **************************************************/
 
 
-function CSelection_GetDirectlySelectedViews() {
-
-						CTest_LogStartNewTest("CSelection_getDirectlySelectedViews");	
-	var views = CView_GetDirectlySelectedViews();
-						CTest_LogObjectList(views);
-}
-
-
-function CSelection_GetAllSelectedViews() {
-
-						CTest_LogStartNewTest("CSelection_GetAllSelectedViews");	
-	var views = CView_GetAllSelectedViews();
-						CTest_LogObjectList(views);
-}
-
-
-
 
 var CSelection_GetDuplicatesInlistGivenElement = function(elm, list) {
 
@@ -116,9 +99,9 @@ var CSelection_FindElementsWithNameInList = function(elementName, list) {
 var CSelection_GetDuplicatesInlistGivenElementNameNotType = function(name, list) {
 
 	var elementsWithSameName = CSelection_FindElementsWithNameInList(name, list); // may contain several element types
-	var allDuplicates = [];
+	var allDuplicates = []; // erik TODO:  fix from array to jarchi collection
 	var duplicates = null;
-	var types = [];
+	var types = [];  // erik TODO: fix from array to jarchi collection
 	elementsWithSameName.each(function(e) {
 		console.log("      " + e.name + ", " + e.type + ", " + ", " + " Id = " + e.id);
 		
@@ -138,25 +121,6 @@ var CSelection_GetDuplicatesInlistGivenElementNameNotType = function(name, list)
 }
 
 
-
-
-function CSelection_findAllConceptsInSelectedViews() {
-
-
-	// TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!????????????????????????????
-	CTest_LogStartNewTest("CSelection_findAllConceptsInSelectedViews");	
-	
-	var selectedFolders = $(selection).filter("folder");
-	var itemList = cFolder_GetAllItemsUnderGivenFoldersForGivenType(selectedFolders, itemType);
-
-	itemList = cView_GetAllItemsInGivenViewsForGivenType("concept");
-	
-	console.log("itemList(" + itemType + "):");
-	itemList.each(function(item) {	
-		console.log("    " + item.name + " (" + item.type + ")");
-	});	
-}
-
 function CSelection_findItemsUnderSelectedFolders(itemType)  {
 	
 	
@@ -167,8 +131,6 @@ function CSelection_findItemsUnderSelectedFolders(itemType)  {
 		//window.alert("Warning: " + "selectedFolders = 0 in function CSelection_findItemsUnderSelectedFolders(itemType)");
 		console.log("Warning: " + "selectedFolders = 0 in function CSelection_findItemsUnderSelectedFolders(itemType)");
 	}
-		
-	
 	
 	
 	//var allItems = cFolder_GetAllItemsUnderGivenFoldersForGivenType(selectedFolders, itemType);
@@ -190,49 +152,79 @@ function CSelection_findItemsUnderSelectedFolders(itemType)  {
 			}
 			else {
 				
-				var conceptInList = cCollection_GetItemsWithGivenId(resultingItems, item);
+				var itemInList = cCollection_GetItemsWithGivenId(resultingItems, item);
 				
-				if (conceptInList.size() < 1)
+				if (itemInList.size() < 1)
 					resultingItems.add($(item));
 			}
 
 		});		
-		
-		
-		/*
-				
-		if (itemType == "concept") { //don't add the same concept several times
-	
-			folderItems.each(function(concept) {	
-			
-				if (resultingItems == null) {
-					resultingItems = $(concept.concept);
-				}
-				else {
-					
-					var conceptInList = cCollection_GetItemsWithGivenId(resultingItems, concept.concept);
-					
-					if (conceptInList.size() < 1)
-						resultingItems.add($(concept.concept));
-				}
-
-			});
-	
-		}
-		else {
-	
-			if (resultingItems == null) {
-				resultingItems = folderItems;
-			}
-			else {
-		
-				resultingItems.add(folderItems);
-			}
-		}
-		*/
-
-		
 	});
 
 	return resultingItems;
 }
+
+function CSelection_GetDirectlySelectedViews() {
+
+	var selectedViews = $(selection).filter("archimate-diagram-model");
+	return selectedViews;
+}
+
+function CSelection_GetViewsUnderSelectedFoldersAndSubfolders() {
+	
+	var selectedFolders = $(selection).filter("folder");
+	var views = cFolder_GetAllItemsUnderGivenFoldersForGivenType(selectedFolders, "view");
+	return views;
+}
+
+function CSelection_GetAllSelectedViews() {
+	
+	var directlySelectedViews = CSelection_GetDirectlySelectedViews();
+	var folderViews = CSelection_GetViewsUnderSelectedFoldersAndSubfolders();
+	var views = directlySelectedViews;
+	if (directlySelectedViews != null)	{
+		if (folderViews != null)
+			views.add(folderViews);
+	}
+	
+	return views;
+
+}
+
+/*********************************
+* Below here mey be untested
+***********************************/
+
+function CSelection_GetAllItemsOfGivenTypeInSelectedViews(itemType) {
+	
+	var resultingItems = null;
+	var viewItems = null;
+	var selectedViews = CSelection_GetAllSelectedViews();
+
+
+
+	selectedViews.each(function(view) {
+	
+		viewItems = $(view).find().filter(itemType);
+
+		viewItems.each(function(item) {	
+		
+			if (itemType == "concept")
+				item = item.concept;
+		
+			if (resultingItems == null) {
+				resultingItems = $(item);
+			}
+			else {
+				
+				var itemInList = cCollection_GetItemsWithGivenId(resultingItems, item);
+				
+				if (itemInList.size() < 1)
+					resultingItems.add($(item));
+			}
+		});
+	});
+
+	return resultingItems;
+}
+

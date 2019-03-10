@@ -27,11 +27,12 @@ var testnum = 0;
 */
 
 
-CTest_CSelection_GetDirectlySelectedViews();
-// --------------------CSelection_GetViewsUnderSelectedFoldersAndSubfolders();
-//  CSelection_GetAllSelectedViews();
+//CTest_CSelection_GetDirectlySelectedViews(++testnum);
+// CTest_CSelection_GetViewsUnderSelectedFoldersAndSubfolders(++testnum);
+// CTest_CSelection_GetAllSelectedViews(++testnum); 
 
-//CSelection_findAllConceptsInGivenViews();
+CTest_CSelection_GetAllItemsOfGivenTypeInSelectedViews(++testnum, "business-actor");
+CTest_CSelection_GetAllItemsOfGivenTypeInSelectedViews(++testnum, "concept");
 
 
 /*

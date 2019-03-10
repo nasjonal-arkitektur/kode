@@ -22,7 +22,7 @@ function CTest_LogText(textToLog) {
 	console.log(textToLog);
 }
 
-function CTest_LogObjectListOfType(items, itemType) {
+function CTest_LogObjectListWithType(items) {
 
 	if (items != null) {
 		var i = 0;
@@ -58,7 +58,7 @@ function CTest_CSelection_findItemsUnderSelectedFolders(testnum, itemType) {
 	
 	CTest_LogStartNewTest("Test " + testnum + ": " + "CTest_CSelection_findItemsUnderSelectedFolders" + ", itemType = " + itemType);	
 	var itemList = CSelection_findItemsUnderSelectedFolders(itemType);
-	CTest_LogObjectListOfType(itemList, itemType);
+	CTest_LogObjectListWithType(itemList);
 }
 
 	
@@ -88,3 +88,32 @@ function CTest_CSelection_findItemsWithGivenTypeAndNameUnderSelectedFolders(test
 	
 }
 
+function CTest_CSelection_GetDirectlySelectedViews(testnum) {
+	
+	CTest_LogStartNewTest("Test " + testnum + ": " + "CTest_CSelection_GetDirectlySelectedViews");
+	var selectedViews = CSelection_GetDirectlySelectedViews();
+	CTest_LogObjectList(selectedViews);
+}
+
+
+function CTest_CSelection_GetViewsUnderSelectedFoldersAndSubfolders(testnum) {
+	
+	CTest_LogStartNewTest("Test " + testnum + ": " + "CTest_CSelection_GetViewsUnderSelectedFoldersAndSubfolders");
+	var selectedViews = CSelection_GetViewsUnderSelectedFoldersAndSubfolders();
+	CTest_LogObjectList(selectedViews);
+}
+
+function CTest_CSelection_GetAllSelectedViews(testnum) {
+	
+	CTest_LogStartNewTest("Test " + testnum + ": " + "CTest_CSelection_GetAllSelectedViews");
+	var selectedViews = CSelection_GetAllSelectedViews();
+	CTest_LogObjectList(selectedViews);
+}
+
+
+function CTest_CSelection_GetAllItemsOfGivenTypeInSelectedViews(testnum, itemType) {
+	
+	CTest_LogStartNewTest("Test " + testnum + ": " + "CTest_CSelection_GetAllItemsOfGivenTypeInSelectedViews(" + itemType + ")");
+	var items = CSelection_GetAllItemsOfGivenTypeInSelectedViews(itemType);
+	CTest_LogObjectListWithType(items);
+}

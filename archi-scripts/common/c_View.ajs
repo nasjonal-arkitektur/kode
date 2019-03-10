@@ -51,52 +51,10 @@ var cView_GetOtherOccurencesInView = function(vu, elm) {
 
 var cView_MergeWithDuplicateElementsInView = function(v) {
 
+	window.prompt("cView_MergeWithDuplicateElementsInView yet to be implemented!? Exiting...");
+	exit();
+
 	var elements = $(v).children().filter("element");
 	return elements;
 }
 
-function CView_GetDirectlySelectedViews() {
-
-	var selectedViews = $(selection).filter("archimate-diagram-model");
-	return selectedViews;
-}
-
-function CView_GetViewsUnderSelectedFoldersAndSubfolders() {
-	
-	var selectedFolders = $(selection).filter("folder");
-	var views = cFolder_GetAllItemsUnderGivenFoldersForGivenType(selectedFolders, "view");
-	return views;
-}
-
-function CView_GetAllSelectedViews() {
-	
-	var folderViews = CView_GetViewsUnderSelectedFoldersAndSubfolders();
-	var directlySelectedViews = CView_GetDirectlySelectedViews();
-	var views = folderViews;
-	views.add(directlySelectedViews);
-	return views;
-
-}
-
-
-function cView_GetAllItemsInGivenViewsForGivenType(givenViews, itemType) {
-	
-
-	var views = givenViews;
-	var items = null;
-	var vItems = null;
-	
-	views.each(function(view) {
-		
-		vItems = $(view).find().filter(itemType);
-		
-		if (items == null) {
-			items = fItems;
-		}
-		else
-			items.add(fItems);
-		
-	});
-
-	return items;
-}
