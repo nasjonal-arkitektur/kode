@@ -13,7 +13,19 @@ function cView_GetSelectedElements() {
 	});
 	
 }
+
+function cView_GetSelectedConcepts() {
+
+
+	return $(selection).filter("concept");
 	
+	/*
+	$(selection).filter("concept").each(function(e) {
+		console.log("Selected concept: " + e.name );			
+	});
+	*/
+	
+}	
 	
 var cView_GetElementsInView = function(v) {
 

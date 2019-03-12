@@ -2,6 +2,8 @@
  * c_Model
  */
 
+//load(__DIR__ + "c_Namespace.ajs");
+ 
 //load(__DIR__ + "Constants.ajs");
 //load(__DIR__ + "CommonFunctions.ajs");
 
@@ -64,8 +66,9 @@ var cModel_GetAllSelectedConcepts = function() {
 	// Could be directly selected by multiple selection in folder or in view
 	// TODO: Could also be indirectly selected via parent view or folder !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-	var concepts = $(selection).filter("concept"); // includes elements and relationshipsv
-	return concepts;
+	var concepts = $(selection).filter("concept"); // includes elements and relationships
+	
+	return concepts; // erik: todo: test if these are the actual concepts only, or also the occurences?
 }
 
 
@@ -116,11 +119,65 @@ var cModel_FindAllModelElementsWithName = function(elementName) {
         return ( (o.name == elementName) );
     });
 }
+	
+
+	
+
+var cModel_OtherConceptsWithSameNameandType = function(occurence, caseSensitive, namespaceSensitive) {
+
+	
+	var occurenceName = occurence.name;
+	
+console.log("occurenceName = " + occurenceName);
+	
+	if (!namespaceSensitive) {
+		occurenceName = cNamespace_GetNameOfConceptWithoutNamespace(occurence);
+		console.log("namespaceSensitive name = ", occurence.name + ", namespaceInsensitive name = " + occurenceName);
+		
+	}
+	
+	if (!caseSensitive)
+		occurenceName = occurenceName.toUpperCase();
+	
+	var occurencetype = null;
+	if (occurence.type == "element")
+		occurencetype = "element";
+	else if (occurence.type == "relationship")
+		occurencetype = "relationship";
+		
+/*		
+    return $(occurencetype).filter(function(o) {
+		if (caseSensitive)
+			return ( (o.name == occurenceName) && (o.type == occurence.type) && (o.concept.id != occurence.concept.id ) ); // erik: consider make it case insensitive? System option?
+		else	
+			return ( (o.name.toUpperCase() == occurenceName ) && (o.type == occurence.type) && (o.concept.id != occurence.concept.id ) ); // erik: consider make it case insensitive? System option?
+    });
+*/
+
+console.log("occurenceName = " + occurenceName);		
+
+    //return $(occurencetype).filter(function(o) {
+	return $("element").filter(function(o) {
+		var oName = o.name;
+		
+		if (!namespaceSensitive) {
+			oName = cNamespace_GetNameOfConceptWithoutNamespace(o);
+		}
+		
+		if (!caseSensitive)
+			oName = oName.toUpperCase();
+		
+		return ( (oName	 == occurenceName ) && (o.type == occurence.type) && (o.concept.id != occurence.concept.id ) );
+		//return ( (o.name.toUpperCase() == occurenceName ) && (o.type == occurence.type) && (o.concept.id != occurence.concept.id ) );
+    });
+	
+}
+
 
 
 var cModel_GetDuplicateModelItems = function(elm) {
 
     return $("element").filter(function(o) {
-        return ( (o.name == elm.name) && (o.type == elm.type) );
+        return ( (o.name == elm.name) && (o.type == elm.type) ); // erik: consider make it case insensitive? System option?
     });
 }

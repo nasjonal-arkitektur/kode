@@ -21,4 +21,23 @@ var cCollection_GetItemsWithGivenId = function(coll, obj) {
     });
 }
 
+var cCollection_GetDuplicatesInlistGivenElement = function(elm, list) {
 
+	return list.filter(function(o) {
+        return ( (o.name == elm.name) && (o.type == elm.type) );
+    });
+}
+
+var cCollection_FindElementsWithNameInList = function(elementName, list) {
+
+    return list.filter(function(o) {
+        return ( (o.name == elementName) );
+    });
+}
+
+var cCollection_GetItemsOfType = function(coll, type) {
+
+    return coll.filter(function(o) {
+        return ( (o.type == type) );
+    });
+}

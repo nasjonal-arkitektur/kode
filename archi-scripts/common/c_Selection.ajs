@@ -228,3 +228,107 @@ function CSelection_GetAllItemsOfGivenTypeInSelectedViews(itemType) {
 	return resultingItems;
 }
 
+function CSelection_GetAllItemsOfGivenTypeAndNameInSelectedViews(itemType, itemName) {
+	
+	var resultingItems = null;
+	var viewItems = null;
+	var selectedViews = CSelection_GetAllSelectedViews();
+
+
+
+	selectedViews.each(function(view) {
+	
+		viewItems = $(view).find().filter(itemType);
+
+		viewItems.each(function(item) {	
+		
+			if (itemType == "concept")
+				item = item.concept;
+		
+			if (resultingItems == null) {
+				if (item.name == itemName) // case sensitive
+					resultingItems = $(item);
+			}
+			else {
+				
+				var itemInList = cCollection_GetItemsWithGivenId(resultingItems, item);
+				
+				if (itemInList.size() < 1) {
+					if (item.name == itemName) // case sensitive
+						resultingItems.add($(item));
+				}
+			}
+		});
+	});
+
+	return resultingItems;
+}
+
+function CSelection_GetDirectlySelectedOccurences() {
+
+	var selectedOccurences = $(selection).filter("element");
+	selectedOccurences.add( $(selection).filter("relationship") );
+	
+	return selectedOccurences;
+}
+
+function CSelection_GetAllDirectlySelectedConcepts() {
+	var resultingItems = null;
+	var selectedItems = null;
+
+
+	selectedItems = $(selection).filter("concept");
+	
+	selectedItems.each(function(item) {	
+		
+		//if (itemType == "concept")
+		item = item.concept; 
+				
+		//if (itemType != null && item.type == itemType) {
+		
+			if (resultingItems == null) {
+				resultingItems = $(item);
+			}
+			else {
+				
+				var itemInList = cCollection_GetItemsWithGivenId(resultingItems, item);
+				
+				if (itemInList.size() < 1)
+					resultingItems.add($(item));
+			}
+		//}
+			
+	});
+	
+	return resultingItems;
+	
+}
+
+function CSelection_GetSelectedConcepts(conceptType) {
+
+	var selectedConcepts = null;
+	var directlySelectedConcepts = null;
+	var conceptsInSelectedViews = null;
+	var conceptsUnderSelectedFolders = null;
+		
+	directlySelectedConcepts = CSelection_GetAllDirectlySelectedConcepts();
+	if (directlySelectedConcepts != null)
+		selectedConcepts = directlySelectedConcepts;
+	
+	conceptsInSelectedViews = CSelection_GetAllItemsOfGivenTypeInSelectedViews("concept");
+	if (selectedConcepts == null)
+		selectedConcepts = conceptsInSelectedViews;
+	else if (conceptsInSelectedViews != null)
+		selectedConcepts.add(conceptsInSelectedViews);
+
+	conceptsUnderSelectedFolders = CSelection_findItemsUnderSelectedFolders("concept");
+	if (selectedConcepts == null)
+		selectedConcepts = conceptsUnderSelectedFolders;
+	else if (conceptsUnderSelectedFolders != null)
+		selectedConcepts.add(conceptsUnderSelectedFolders);
+
+	if (conceptType != "")
+		selectedConcepts = cCollection_GetItemsOfType(selectedConcepts, conceptType);
+	
+	return selectedConcepts;
+}

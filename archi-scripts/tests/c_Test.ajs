@@ -34,7 +34,7 @@ function CTest_LogObjectListWithType(items) {
 		});
 	}
 	else {
-		console.log("Found 0 selected " + itemType + "s");
+		//console.log("Found 0 selected " + itemType + "s");
 	}
 }
 
@@ -115,5 +115,12 @@ function CTest_CSelection_GetAllItemsOfGivenTypeInSelectedViews(testnum, itemTyp
 	
 	CTest_LogStartNewTest("Test " + testnum + ": " + "CTest_CSelection_GetAllItemsOfGivenTypeInSelectedViews(" + itemType + ")");
 	var items = CSelection_GetAllItemsOfGivenTypeInSelectedViews(itemType);
+	CTest_LogObjectListWithType(items);
+}
+
+function CTest_CSelection_GetAllItemsOfGivenTypeAndNameInSelectedViews(testnum, itemType, itemName) {
+	
+	CTest_LogStartNewTest("Test " + testnum + ": " + "CTest_CSelection_GetAllItemsOfGivenTypeInSelectedViews(" + itemType + ", " + itemName + ")");
+	var items = CSelection_GetAllItemsOfGivenTypeAndNameInSelectedViews(itemType, itemName);
 	CTest_LogObjectListWithType(items);
 }

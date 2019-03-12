@@ -16,11 +16,13 @@ load(__DIR__ + "../common/c_Viewpoint.ajs");
 
 load(__DIR__ + "../common/c_selection.ajs");
 
-load(__DIR__ + "c_Test.ajs");
+load(__DIR__ + "./tests/c_Test.ajs");
 
 
 var testnum = 0;
 
+
+CTest_cModel_isExistinConcept
 
 /*
 *	View related tests
@@ -33,7 +35,7 @@ var testnum = 0;
 
 CTest_CSelection_GetAllItemsOfGivenTypeInSelectedViews(++testnum, "business-actor");
 CTest_CSelection_GetAllItemsOfGivenTypeInSelectedViews(++testnum, "concept");
-
+CTest_CSelection_GetAllItemsOfGivenTypeAndNameInSelectedViews(++testnum, "concept", "Erik"); // case insensitive?
 
 /*
 *	Folder related tests
