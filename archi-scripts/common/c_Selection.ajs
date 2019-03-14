@@ -128,8 +128,7 @@ function CSelection_findItemsUnderSelectedFolders(itemType)  {
 	
 	if (selectedFolders.size() < 1) {
 		
-		//window.alert("Warning: " + "selectedFolders = 0 in function CSelection_findItemsUnderSelectedFolders(itemType)");
-		console.log("Warning: " + "selectedFolders = 0 in function CSelection_findItemsUnderSelectedFolders(itemType)");
+		//console.log("Warning: " + "selectedFolders = 0 in function CSelection_findItemsUnderSelectedFolders(itemType)");
 	}
 	
 	
@@ -264,13 +263,6 @@ function CSelection_GetAllItemsOfGivenTypeAndNameInSelectedViews(itemType, itemN
 	return resultingItems;
 }
 
-function CSelection_GetDirectlySelectedOccurences() {
-
-	var selectedOccurences = $(selection).filter("element");
-	selectedOccurences.add( $(selection).filter("relationship") );
-	
-	return selectedOccurences;
-}
 
 function CSelection_GetAllDirectlySelectedConcepts() {
 	var resultingItems = null;
@@ -304,7 +296,7 @@ function CSelection_GetAllDirectlySelectedConcepts() {
 	
 }
 
-function CSelection_GetSelectedConcepts(conceptType) {
+function CSelection_GetSelectedConcepts(conceptType) { // always return the concepts only, not the occurences
 
 	var selectedConcepts = null;
 	var directlySelectedConcepts = null;
@@ -331,4 +323,13 @@ function CSelection_GetSelectedConcepts(conceptType) {
 		selectedConcepts = cCollection_GetItemsOfType(selectedConcepts, conceptType);
 	
 	return selectedConcepts;
+}
+
+
+function CSelection_GetDirectlySelectedOccurences() {
+
+	var selectedOccurences = $(selection).filter("element");
+	selectedOccurences.add( $(selection).filter("relationship") );
+	
+	return selectedOccurences;
 }

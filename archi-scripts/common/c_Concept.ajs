@@ -3,4 +3,134 @@
  */
  
 
- //cConcept
+load(__DIR__ + "c_Model.ajs");
+
+ 
+function cConcept_GetProperties(concept) {  // maybe not needed, but keep it to show...
+	
+	var propList = $(concept).prop();
+ 	/* .each not working here!?
+	propList.each(function(p) {
+		console.log(p);
+	});	
+	*/
+	
+	console.log("\nProperties:");
+	for (var i = 0; i < propList.size(); i++) {
+		console.log(propList[i] + ": " + concept.prop( propList[i]) );
+	}
+	
+	return propList;
+}
+
+function cConcept_getRelations(concept) { 
+
+	var relations = $(concept).rels();
+	
+	/* works
+	relations.each(function(r) {
+		console.log(r);
+	});	
+	*/
+
+	return relations;
+}
+
+function cConcept_HasProperty(concept, propertyName)
+{
+	console.log("cConcept_HasProperty(" + concept.name + ", " + propertyName + ")");
+	
+	var propList = concept.prop();
+	for (var i = 0; i < propList.size(); i++) {
+		
+		if (propList[i] == propertyName)
+			return true;
+	}		
+
+	return false;
+}
+
+function cConcept_AddOtherRelation(thisConcept, otherConcept, otherRelation) { 
+	console.log("cConcept_AddOtherRelation(" + thisConcept + ", " + otherConcept + ", " + otherRelation + ")" );
+
+	var newRelation = null;
+	
+	var source = $(otherRelation).sourceEnds();
+	source = source.first();
+	var target = $(otherRelation).targetEnds();
+	target = target.first();
+	
+	if (source == null) {
+		console.log("Error: source = 0, exiting...");
+		exit();
+	}
+		
+
+
+	console.log("source: " + source.id);
+	console.log("target: " + target.id);
+	
+	
+	//model.createRelationship(relationship-type, name, source, target);
+	
+	if (source.id == otherConcept.id)
+		source = thisConcept;
+	if (target.id == otherConcept.id)
+		target = thisConcept;
+
+	console.log("source: " + source.id);
+	console.log("target: " + target.id);
+	
+	newRelation = model.createRelationship(otherRelation.type, otherRelation.name, source, target); // default folder
+	
+	console.log("new Relation created");
+	
+	return newRelation;
+
+}
+
+function cConcept_MergeWithMasterConcept(conceptToReplace, masterConcept) {
+
+
+		//debug?(console.log("Merging concept " + conceptToReplace.name + ", id = " + conceptToReplace.id + " with " + masterConcept.name + ", id = " + masterConcept.id) ):true;
+		console.log("Merging concept " + conceptToReplace.name + ", id = " + conceptToReplace.id + " with " + masterConcept.name + ", id = " + masterConcept.id);
+
+		var occurencesToFix = $(conceptToReplace).objectRefs();
+		occurencesToFix.each(function(o) {
+			
+			var view = cElement_GetView(o);
+				if (view != null) {
+				console.log("Merging " + o.name + ", id = " + o.id + " in view " + view + " with masterConcept id = " + masterConcept.id );
+			
+				var newViewObj = view.add(masterConcept, o.bounds.x, o.bounds.y, o.bounds.width, o.bounds.height); 
+				o.delete(); // delete each replaced occurence
+			}
+						
+		});	
+		
+		// before deleting the conceptToReplace, merge the attributes and connections
+		// TBD: ask user first????
+		
+		// merge attributes
+		var propsOfconceptToReplace = conceptToReplace.prop();
+		for (var i = 0; i < propsOfconceptToReplace.size(); i++) {
+			
+			if (!cConcept_HasProperty(masterConcept, propsOfconceptToReplace[i]) )
+				masterConcept.prop(propsOfconceptToReplace[i], conceptToReplace.prop( propsOfconceptToReplace[i]));
+		}	
+
+		// merge connections
+		var relationsOfconceptToReplace = cConcept_getRelations(conceptToReplace);
+		relationsOfconceptToReplace.each(function(r) {
+			
+			newR = cConcept_AddOtherRelation(masterConcept, conceptToReplace, r);
+			
+		});	
+		
+		// consider enhancement: show the newly created relations if the corresponding old ones were shown...
+		//      ... will need to iterate tgroug all views and getDiagramComponents prior to deleting the occurences above
+		
+		conceptToReplace.delete(); // finally delete the replaced concept
+
+}
+

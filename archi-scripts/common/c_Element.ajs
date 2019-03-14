@@ -76,9 +76,21 @@ function cElement_HighlightConceptsInViewBeforeMerge(elm) {
 
 function cElement_GetView(elm) {
 	
-	console.log("cElement_GetView")
-
-	return elm.view; // to be tested!???????????????
+	//console.log("cElement_GetView for elm.id=" + elm.id);
+	return elm.view; 
 	
 }
 
+/*
+
+			$(e).parents().each(function(parent) {
+				if (parent.type == "folder") 
+					console.log("    " + e.name + " is located in folder " + parent.name);			
+			});
+			
+			$(e).parent().each(function(parent) {
+				if (parent.type == "view") 
+					console.log("    " + e.name + " occurs in view " + parent.name);			
+			});
+
+*/

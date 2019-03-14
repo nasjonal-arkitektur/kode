@@ -47,13 +47,13 @@ function cModel_GetCurrentModelName() {
 	return m_model.name;
 }
 
-var cModel_GetDirectlySelectedElements = function() {
+var cModel_GetDirectlySelectedElements = function() { // erik: moved to CSelecton?
 
 	var elements = $(selection).filter("element");
 	return elements;
 }
 
-var cModel_GetAllDirectlySelectedConcepts = function() {
+var cModel_GetAllDirectlySelectedConcepts = function() {  // erik: moved to CSelecton?
 
 	// directly selected by multiple selection in folder or in view
 	
@@ -61,7 +61,7 @@ var cModel_GetAllDirectlySelectedConcepts = function() {
 	return concepts;
 }
 
-var cModel_GetAllSelectedConcepts = function() {
+var cModel_GetAllSelectedConcepts = function() { // erik: moved to CSelecton?
 
 	// Could be directly selected by multiple selection in folder or in view
 	// TODO: Could also be indirectly selected via parent view or folder !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -74,8 +74,15 @@ var cModel_GetAllSelectedConcepts = function() {
 
 
 var cModel_GetAllModelConcepts = function() {
-
 	return $("concept");
+}
+
+var cModel_GetAllModelElements = function() {
+	return $("element");
+}
+
+var cModel_GetAllModelRelationships = function() {
+	return $("relationship");
 }
 
 
@@ -121,18 +128,16 @@ var cModel_FindAllModelElementsWithName = function(elementName) {
 }
 	
 
-	
-
 var cModel_OtherConceptsWithSameNameandType = function(occurence, caseSensitive, namespaceSensitive) {
 
 	
 	var occurenceName = occurence.name;
 	
-console.log("occurenceName = " + occurenceName);
+//console.log("occurenceName = " + occurenceName);
 	
 	if (!namespaceSensitive) {
 		occurenceName = cNamespace_GetNameOfConceptWithoutNamespace(occurence);
-		console.log("namespaceSensitive name = ", occurence.name + ", namespaceInsensitive name = " + occurenceName);
+		//console.log("namespaceSensitive name = ", occurence.name + ", namespaceInsensitive name = " + occurenceName);
 		
 	}
 	
@@ -140,7 +145,7 @@ console.log("occurenceName = " + occurenceName);
 		occurenceName = occurenceName.toUpperCase();
 	
 	var occurencetype = null;
-	if (occurence.type == "element")
+	if (occurence.type == "element") // works also for different types of elements, such as e.g. business-actor?
 		occurencetype = "element";
 	else if (occurence.type == "relationship")
 		occurencetype = "relationship";
@@ -154,7 +159,7 @@ console.log("occurenceName = " + occurenceName);
     });
 */
 
-console.log("occurenceName = " + occurenceName);		
+//console.log("occurenceName = " + occurenceName);		
 
     //return $(occurencetype).filter(function(o) {
 	return $("element").filter(function(o) {
@@ -181,3 +186,5 @@ var cModel_GetDuplicateModelItems = function(elm) {
         return ( (o.name == elm.name) && (o.type == elm.type) ); // erik: consider make it case insensitive? System option?
     });
 }
+
+
