@@ -3,7 +3,7 @@
  */
  
  
-console.log("c_Namespace");
+//console.log("c_Namespace");
  
 load(__DIR__ + "Constants.ajs");
 load(__DIR__ + "c_Model.ajs");
@@ -28,40 +28,19 @@ function cNamespace_conceptNameIncludesNamespace(c) {
 
 
 
-function cNamespace_ListSelectedConceptsWithoutNamespace(selectedConcepts) {
-
-	window.alert("cNamespace_ListSelectedConceptsWithoutNamespace implementation not finished. Exiting...");
-	exit(1);
-
-	var listOfConceptsWithoutNamespace = null;
-
-    //$("element").each(function(e) {
-   selectedConcepts.each(function(e) {	
-   
-		var namespaceValue = e.prop(const_prop_namespace);
-		
-	
-		if (!namespaceValue) {
-			console.log("Warning: " + " missing difi:namespace property for element " + e.name );
-        }
-    });
-	
-	//TBD: return listOfConceptsWithoutNamespace
-}
-
-function cNamespace_UpdateNamespaceForSelectedConcepts(selectedConcepts, newNamespaceValue) {
+function cNamespace_UpdateNamespaceForGivenConcepts(givenConcepts, newNamespaceValue) {
 
 
-	//selectedConcepts.prop(const_prop_namespace, newNamespaceValue);
+	//givenConcepts.prop(const_prop_namespace, newNamespaceValue);
 
 	// another way to code this: 
-	selectedConcepts.each(function(c) {
+	givenConcepts.each(function(c) {
 		
 		if (cNamespace_conceptNameIncludesNamespace(c) ) {
 			
-			cNamespace_RemoveNamespaceFromNameOfSelectedConcepts();
+			cNamespace_RemoveNamespaceFromNameOfGivenConcepts(givenConcepts);
 			c.prop(const_prop_namespace, newNamespaceValue);
-			cNamespace_AddNamespaceToNameForSelectedConcepts();
+			cNamespace_AddNamespaceToNameForGivenConcepts(givenConcepts);
 		}
 		else {
 			c.prop(const_prop_namespace, newNamespaceValue);
@@ -71,9 +50,11 @@ function cNamespace_UpdateNamespaceForSelectedConcepts(selectedConcepts, newName
 }
 
 
-function cNamespace_AddNamespaceToNameForSelectedConcepts () {
+function cNamespace_AddNamespaceToNameForGivenConcepts(givenConcepts) {
 
-	$(selection).each(function(e) {
+
+	//$(selection).each(function(e) {
+	givenConcepts.each(function(e) {
 		var namespaceValue = e.prop(const_prop_namespace);
 
 		if (e.namespaceValue != "")
@@ -82,9 +63,10 @@ function cNamespace_AddNamespaceToNameForSelectedConcepts () {
 	});
 }
 
-function cNamespace_RemoveNamespaceFromNameOfSelectedConcepts () {
+function cNamespace_RemoveNamespaceFromNameOfGivenConcepts(givenConcepts) {
 
-	$(selection).each(function(e) {
+	//$(selection).each(function(e) {
+	givenConcepts.each(function(e) {
 
 		var namespaceValue = e.prop(const_prop_namespace);
 		var namespaceWithPreAndPostfix = const_title_namespace_prefix + namespaceValue + const_title_namespace_postfix;
@@ -151,28 +133,4 @@ console.log("strToReplace = " + strToReplace); // temptest
 	
 	return concept.name;
 	
-}
-
-function cNamespace_UserDialogInputNewNamespaceValue() {
-
-		var propValue = window.prompt("Which value do you want to set for '"+const_prop_namespace+"' (leave empty to cancel)?", "");	
-		return propValue;
-}
-
-function cNamespace_UpdateNamespaceForSelectedConceptsWithUserDialog () {
-
-	var selectedConcepts = cModel_GetAllDirectlySelectedConcepts();
-	if (selectedConcepts == null || selectedConcepts.size() < 1)
-	{
-		window.alert("No concepts selected. Exiting...");
-		exit();
-	}
-
-	//log_ListElements(selectedConcepts, "selected elements");
-
-	var newNamespaceValue = cNamespace_UserDialogInputNewNamespaceValue();
-	//UpdateNamespaceForSelectedConcepts(selectedConcepts, newNamespaceValue);
-	cNamespace_UpdateNamespaceForSelectedConcepts(selectedConcepts, newNamespaceValue);
-
-	window.alert("Updated namespace to '" + newNamespaceValue + "' for " + selectedConcepts.size() + " concepts.");
 }

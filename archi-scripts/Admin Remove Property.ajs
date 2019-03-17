@@ -1,0 +1,27 @@
+/*
+ * Admin remove property
+ */
+
+load(__DIR__ + "./common/Constants.ajs");
+ 
+console.clear();
+ 
+function RemovePropertyGlobally() {
+ 
+ 
+ 	// model
+	
+	
+	// views
+	$("view").each(function(view) {
+		view.removeProp(const_prop_default_language);
+		view.removeProp(const_prop_current_language);
+		console.log("View " + view.name + ": " + "Removed view property " + const_prop_default_language + " & " + const_prop_current_language);
+	});
+	
+	// elements and relations
+	
+	
+}
+
+RemovePropertyGlobally();

@@ -134,3 +134,117 @@ function cConcept_MergeWithMasterConcept(conceptToReplace, masterConcept) {
 
 }
 
+
+
+function cConcept_getRelations(concept) { 
+
+	var relations = $(concept).rels();
+	
+	/* works
+	relations.each(function(r) {
+		console.log(r);
+	});	
+	*/
+
+	return relations;
+}
+
+
+function cConcept_SetProperty(concept, propName, propvalue) {
+	
+	concept.prop(propName, propvalue);
+}
+
+function cConcept_SetName(concept, name) {
+	
+	concept.name = name;
+}
+
+function cConcept_GetProperty(concept, propName) {
+	
+	//if (!cConcept_HasProperty(concept, propertyName) )
+	//	return false;
+	
+	var propValue = concept.prop(propName);
+
+console.log("cConcept_GetProperty propValue = ", propValue);
+
+	return propValue;
+}
+
+function cConcept_SetLanguage(concept, language) {
+	
+	// 1. set the nam3
+	var localizedName = null;
+	var propName = null;
+	
+
+	if (language === const_prop_language_value_no) {	
+		propName = const_prop_name_no;
+	}
+	else if (language === const_prop_language_value_en) {	
+		propName = const_prop_name_en;
+	}
+	else {
+		console.log("Error: Invalid language '" + language + "'" + ". Existing...");
+	}
+	
+	localizedName = cConcept_GetProperty(concept, propName);
+	
+	if (localizedName === null) {
+		console.log("Warning: Cannot set language '" + language + "' for name, due to missing property " + propName);
+		return;
+	}
+	else if (localizedName === "") {
+		console.log("Warning: cannot set name to language '" + language + "', due to blank property " + propName);
+		return;
+	}
+	
+	cConcept_SetName(concept, localizedName);
+
+
+
+	
+/*
+	if (language === const_prop_language_value_no) {
+		
+		if (name_no === null) {
+			console.log("Warning: Cannot set language '" + language + "' for name, due to missing property " + const_prop_name_no);
+			return;
+		}
+		if (name_no === "") {
+			console.log("Warning: cannot set name to language '" + const_prop_language_value_no + "', due to blank property " + const_prop_name_no);
+			return;
+		}
+		
+		cConcept_SetName(concept, name_no);
+			
+	}
+	else if (language === const_prop_language_value_en) {
+		
+		if (name_en === null) {
+			console.log("Warning: cannot set name to language '" + const_prop_language_value_en + "', due to missing property " + const_prop_name_en);
+			return;
+		}
+		if (name_en === "") {
+			console.log("Warning: cannot set name to language '" + const_prop_language_value_en + "', due to blank property " + const_prop_name_en);
+			return;
+		}
+		
+		
+		cConcept_SetName(concept, name_en);
+	}
+	else {
+		var errorMsg = "Error: Invalid language '" + language + "'" + ". Existing..."; 
+		console.log(errorMsg);
+window.alert(errorMsg);
+		exit();
+	}
+	
+*/	
+	
+	// 2. update the language property of the concept
+	cConcept_SetProperty(concept, const_prop_language, language);
+
+}
+	

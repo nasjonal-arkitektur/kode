@@ -15,11 +15,12 @@ var const_prop_namespace_val_eira = "eira";
 var const_prop_namespace_val_eirabased = "eirabased";
 
 var const_prop_language = "difi:language";
-const_prop_default_language = "difi:defaultLanguage";
-const_prop_current_language = "difi:currentLanguage";
+const_prop_default_language = "difi:default_language";
+const_prop_current_language = "difi:current_language";
 var const_prop_language_value_no = "no";
 var const_prop_language_value_en = "en";
 
+var const_prop_name_to_display = "difi:display_name";
 var const_prop_name_no = "difi:name_no";
 var const_prop_name_en = "difi:name_en";
 var const_prop_description_no = "difi:description_no";

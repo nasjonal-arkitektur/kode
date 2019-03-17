@@ -319,7 +319,7 @@ function CSelection_GetSelectedConcepts(conceptType) { // always return the conc
 	else if (conceptsUnderSelectedFolders != null)
 		selectedConcepts.add(conceptsUnderSelectedFolders);
 
-	if (conceptType != "")
+	if (conceptType != null && conceptType != "")
 		selectedConcepts = cCollection_GetItemsOfType(selectedConcepts, conceptType);
 	
 	return selectedConcepts;
