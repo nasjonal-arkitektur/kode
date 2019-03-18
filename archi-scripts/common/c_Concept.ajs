@@ -2,7 +2,7 @@
  * c_concept
  */
  
-
+load(__DIR__ + "Constants.ajs");
 load(__DIR__ + "c_Model.ajs");
 
  
@@ -247,4 +247,50 @@ window.alert(errorMsg);
 	cConcept_SetProperty(concept, const_prop_language, language);
 
 }
-	
+
+
+function cConcept_RemoveNamespaceFromName(concept) {
+
+		var namespaceValue = concept.prop(const_prop_namespace);
+		var namespaceWithPreAndPostfix = const_title_namespace_prefix + namespaceValue + const_title_namespace_postfix;
+		
+		console.log("Removing " + namespaceWithPreAndPostfix + " from displayed name of " + concept.name);
+		
+		// TODO: replace code by calling cNamespace_GetNameOfConceptWithoutNamespace!
+
+		if (concept.namespaceValue != "") // also test for null?
+		{
+			var startPos = concept.name.indexOf(const_title_namespace_prefix);
+			if (startPos >= 0) {
+			
+				var restOfString = concept.name.substring(startPos);
+				var endPos = restOfString.indexOf(const_title_namespace_postfix);
+				
+				if (endPos >= 0) {
+				
+					var strToReplace = restOfString.substring(0, endPos + 1);
+					//console.log("strToReplace = " + strToReplace); // temptest
+
+					concept.name = concept.name.replace(strToReplace, "");	
+				}
+			}
+		}	
+		
+		return concept.name;
+}
+
+
+function cConcept_AddNamespaceToName(concept) {
+
+		var namespaceValue = concept.prop(const_prop_namespace);
+
+		if (concept.namespaceValue != "") {
+			concept.name = cConcept_RemoveNamespaceFromName(concept);
+			
+			var namespaceWithPreAndPostfix = const_title_namespace_prefix + namespaceValue + const_title_namespace_postfix;;
+			
+			console.log("Adding " + namespaceWithPreAndPostfix + " to displayed name of " + concept.name);
+			//concept.name += const_title_namespace_prefix + namespaceValue + const_title_namespace_postfix;
+			concept.name += namespaceWithPreAndPostfix;
+		}
+}
