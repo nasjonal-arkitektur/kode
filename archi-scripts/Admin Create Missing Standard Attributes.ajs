@@ -28,16 +28,20 @@ function CreateDefaultProperties() {
 	$("view").each(function(view) {
 		//CreateMissingProperty(view, const_prop_default_language, const_prop_language_value_no);
 		//CreateMissingProperty(view, const_prop_current_language, const_prop_language_value_no);
+		CreateMissingProperty(view, const_prop_current_language, const_prop_language_value_no);
     });
 	
 	// elements and relations
     $("concept").each(function(concept) {
 		CreateMissingProperty(concept, const_prop_namespace, const_prop_namespace_value_default);
 		CreateMissingProperty(concept, const_prop_name_no, concept.name); // TBD: consider model const_prop_current_language
-		CreateMissingProperty(concept, const_prop_name_en, concept.name + " (no)"); // TBD: consider model const_prop_current_language
+		CreateMissingProperty(concept, const_prop_name_en, ""); // TBD: consider model const_prop_current_language
 		
 		CreateMissingProperty(concept, const_prop_description_no, concept.documentation ); // TBD: consider model const_prop_current_language
-		CreateMissingProperty(concept, const_prop_description_en, concept.documentation  + " (no)"); // TBD: consider model const_prop_current_language
+		CreateMissingProperty(concept, const_prop_description_en, ""); // TBD: consider model const_prop_current_language
+		
+		//CreateMissingProperty(concept, const_prop_name_to_display, "");
+		
     });
 	
 	console.log("Ending function CreateDefaultProperties");
