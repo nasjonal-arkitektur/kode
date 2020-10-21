@@ -13,12 +13,15 @@ namespace DesktopApp1
 {
     class NasjonalArkitektur
     {
-        static string m_commonDirName = "na_felles";
+        static string m_commonDirName = "plattform_felles";
+        //static string m_commonDirName = "na_felles";
+
+
         static string m_rootDir = null; // = @"C:\Users\eha\OneDrive\GitHub\Difi\nasjonal_arkitektur";
         static string m_srcDir = null; // = m_rootDir + @"\" + m_commonDirName;
 
         static bool test = false;
-        static bool option_github_io = false;
+        static bool option_github_io = true;
 
 
         EriksFileUtils m_utils = null;
@@ -26,12 +29,14 @@ namespace DesktopApp1
         public NasjonalArkitektur()
         {
             if (option_github_io)
-                m_rootDir = @"C:\Users\eha\OneDrive\GitHub\nasjonal-arkitektur\nasjonal-arkitektur.github.io";
+                m_rootDir = @"C:\github\digdir\nasjonal-arkitektur.github.io";
+                //m_rootDir = @"C:\Users\eha\OneDrive\GitHub\nasjonal-arkitektur\nasjonal-arkitektur.github.io";
                 //m_rootDir = @"C:\Users\eha\OneDrive\GitHub\NA-test\NA-test.github.io";
             else
-                m_rootDir = @"C:\Users\eha\OneDrive\GitHub\Difi\nasjonal_arkitektur";
+                //m_rootDir = @"C:\Users\eha\OneDrive\GitHub\Difi\nasjonal_arkitektur";
+                m_rootDir = @"C:\github\digdir\nasjonal_arkitektur";
 
-            m_srcDir = m_rootDir + @"\" + m_commonDirName;
+        m_srcDir = m_rootDir + @"\" + m_commonDirName;
 
             if (test)
                 m_rootDir = m_rootDir + @"\" + "test1";
@@ -89,7 +94,7 @@ namespace DesktopApp1
                 result = true;
             else if (s.Contains("\\felles"))
                 result = true;
-            else if (s.Contains("\\na_felles"))
+            else if (s.Contains("\\" + m_commonDirName))
                 result = true;
             else if (s.Contains("\\media"))
                 result = true;
@@ -111,7 +116,7 @@ namespace DesktopApp1
                 result = true;
             else if (s.Contains("\\felles"))
                 result = true;
-            else if (s.Contains("\\na_felles"))
+            else if (s.Contains("\\" + m_commonDirName))
                 result = true;
 
             else if (s.Contains("\\media")) //????????????????????
@@ -375,6 +380,10 @@ namespace DesktopApp1
             try
             {
                 string path = Path.GetDirectoryName(adocfile); // Note: this statement doesn't work with long paths aka pre Windows 10
+
+
+
+
                 string filenameWitoutExtension = Path.GetFileNameWithoutExtension(adocfile);
                 string htmlFile = path + @"\" + filenameWitoutExtension + ".html";
                 string mainHtml = path + @"\" + "main.html";
@@ -433,11 +442,9 @@ namespace DesktopApp1
 
                 processInfo = new ProcessStartInfo("asciidoctor", "\"" + adocfile + "\"");
 
-
-
                 processInfo.CreateNoWindow = true;
                 processInfo.UseShellExecute = true;
-                processInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                processInfo.WindowStyle = ProcessWindowStyle.Hidden; 
 
                 // for getting error output; see https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.standarderror?view=netframework-4.7.2
                 //processInfo.UseShellExecute = false;

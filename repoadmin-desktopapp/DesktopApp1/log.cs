@@ -1,4 +1,4 @@
-﻿//#define GITHUB_IO
+﻿#define GITHUB_IO
 
 using System;
 using System.Collections.Generic;
@@ -15,9 +15,9 @@ namespace DesktopApp1
     {
 
 #if GITHUB_IO
-        const string m_logfilePath = @"C:\Users\eha\OneDrive\GitHub\nasjonal-arkitektur\nasjonal-arkitektur.github.io\log\logfile.txt";
+        const string m_logfilePath = @"C:\github\digdir\nasjonal-arkitektur.github.io\log\logfile.txt";
 #else
-        const string m_logfilePath = @"C:\Users\eha\OneDrive\GitHub\Difi\nasjonal_arkitektur\plattform_\log\logfile.txt";
+        const string m_logfilePath = @"C:\github\digdir\nasjonal_arkitektur\plattform_\log\logfile.txt";
 #endif
 
         /*

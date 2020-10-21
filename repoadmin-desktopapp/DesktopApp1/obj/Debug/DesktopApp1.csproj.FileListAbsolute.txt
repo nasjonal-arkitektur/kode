@@ -38,3 +38,12 @@ C:\Users\eha\OneDrive\GitHub\nasjonal-arkitektur\kode-repoadmin\repoadmin-deskto
 C:\Users\eha\OneDrive\GitHub\nasjonal-arkitektur\kode-repoadmin\repoadmin-desktopapp\DesktopApp1\obj\Debug\DesktopApp1.csproj.CoreCompileInputs.cache
 C:\Users\eha\OneDrive\GitHub\nasjonal-arkitektur\kode-repoadmin\repoadmin-desktopapp\DesktopApp1\obj\Debug\DesktopApp1.exe
 C:\Users\eha\OneDrive\GitHub\nasjonal-arkitektur\kode-repoadmin\repoadmin-desktopapp\DesktopApp1\obj\Debug\DesktopApp1.pdb
+C:\github\na\kode-repoadmin\repoadmin-desktopapp\DesktopApp1\bin\Debug\DesktopApp1.exe.config
+C:\github\na\kode-repoadmin\repoadmin-desktopapp\DesktopApp1\bin\Debug\DesktopApp1.exe
+C:\github\na\kode-repoadmin\repoadmin-desktopapp\DesktopApp1\bin\Debug\DesktopApp1.pdb
+C:\github\na\kode-repoadmin\repoadmin-desktopapp\DesktopApp1\obj\Debug\DesktopApp1.csprojAssemblyReference.cache
+C:\github\na\kode-repoadmin\repoadmin-desktopapp\DesktopApp1\obj\Debug\DesktopApp1.Form1.resources
+C:\github\na\kode-repoadmin\repoadmin-desktopapp\DesktopApp1\obj\Debug\DesktopApp1.Properties.Resources.resources
+C:\github\na\kode-repoadmin\repoadmin-desktopapp\DesktopApp1\obj\Debug\DesktopApp1.csproj.GenerateResource.cache
+C:\github\na\kode-repoadmin\repoadmin-desktopapp\DesktopApp1\obj\Debug\DesktopApp1.exe
+C:\github\na\kode-repoadmin\repoadmin-desktopapp\DesktopApp1\obj\Debug\DesktopApp1.pdb

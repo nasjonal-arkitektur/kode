@@ -175,8 +175,8 @@ namespace DesktopApp1
             //string textToFind = "link:./";
             //string textToFind = "include::";
 
-            //string textToFind = "TBD.";
-            string textToFind = "/na_";
+            string textToFind = "TBD.";
+            
 
 
             int count = na.SøkTekstIAlleFiler(textToFind);
